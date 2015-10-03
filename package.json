@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.4.7",
+    "angular-ui-router": "^0.2.15",
     "browserify": "^11.2.0"
   }
 }
