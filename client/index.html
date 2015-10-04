@@ -1,35 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charles Crame</title>
     <script src="app.bundle.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./assets/style.css">
+    <link rel="icon" href="./assets/logo.png">
 </head>
 
 
 
-<body class="header" ng-app="main">
-    <header ng-controller="mainController">
+<body ng-app="main" ng-controller="mainController" ng-class="{stopScroll:show}">
+    <nav ng-click="openMobileNav()" ng-class="{'show':show}" class="nav-mobile-menu">
+        <div ng-class="{selected: selected[0]}" ng-click="redirect('home',0)" class="nav-mobile-item">Home</div><!--
+     --><div ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)" class="nav-mobile-item">Blog</div><!--
+     --><div ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)" class="nav-mobile-item">Projects</div><!--
+     --><div ng-class="{selected: selected[3]}" ng-click="redirect('about',3)" class="nav-mobile-item">About</div>
+    </nav>
+    <header>
+        <nav class="nav-bar">
+            <nav ng-click="openMobileNav()" class="hamburger fa fa-bars fa-2x"></nav>
+            <div class="site-logo" ng-click="redirect('home',0)"><img src="./assets/logo.png" alt="home"><div class="site-title">Charles Crame</div></div>
+            <div ng-class="{selected: selected[0]}" ng-click="redirect('home',0)" class="nav-item">Home<div class="nav-hover"></div></div><!--
+         --><div ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)" class="nav-item">Blog<div class="nav-hover"></div></div><!--
+         --><div ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)" class="nav-item">Projects<div class="nav-hover"></div></div><!--
+         --><div ng-class="{selected: selected[3]}" ng-click="redirect('about',3)" class="nav-item">About<div class="nav-hover"></div></div>
+        </nav>
+
+
         <div class="contact-info"> 
-            <div class="site-title" ng-click="redirect('home',0)">Charles</div>
             <div class="contact-container" ng-class="{visible:visible}">
                 <span class="button" ng-click="toggleVisibility()">Contact</span>
-                <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x"></i></a> 
-                <a href="https://twitter.com/cpcrame"><i class="fa fa-twitter fa-2x"></i></a>
-                <a href="https://github.com/ccrame"><i class="fa fa-github fa-2x"></i></a>
+                <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x fa-inverse"></i></a> 
+                <a href="https://twitter.com/cpcrame"><i class="fa fa-twitter fa-2x fa-inverse"></i></a>
+                <a href="https://github.com/ccrame"><i class="fa fa-github fa-2x fa-inverse"></i></a>
             </div>
         </div>
-        <nav class="nav-bar">
-            <div ng-class="{selected: selected[0]}" ng-click="redirect('home',0)">Home<div class="nav-hover"></div></div><!--
-         --><div ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)">Blog<div class="nav-hover"></div></div><!--
-         --><div ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)">Projects<div class="nav-hover"></div></div><!--
-         --><div ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">About<div class="nav-hover"></div></div>
-        </nav>
+
         <div class="header-background">
             <img src="./assets/space-view2.jpg" alt="space" ng-class="{home:selected[0],blog:selected[1],projects:selected[2],about:selected[3]}">
         </div>
     </header>
+
+
     <div ui-view class="container"></div>
+
+
+    <footer>
+        <div class="footer-padding"></div>
+        <div>
+            <span class="footer-content">Contact &nbsp;&nbsp;| &nbsp;&nbsp;Details &nbsp;&nbsp;| &nbsp;&nbsp;Etc</span>
+        </div>
+    </footer>
 </body>
+
 </html>

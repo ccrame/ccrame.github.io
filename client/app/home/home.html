@@ -1,6 +1,17 @@
 <section class="home-container">
-    <aside class="article-list"></aside>
-    <div class="article-container">
-        <article>sample article</article>
+    <div class="home-recents">
+        <div class="home-section-title">Recent Articles</div>
+        <div class="home-recents-container" ng-repeat="(key,value) in recents">
+            <div class="article-info">Share</div>
+            <div class="home-recents-content">
+                <div class="home-recents-image"></div>
+                <span class="home-recents-title">{{ value }}</span>
+                <p>This is a description of the article. This is why this article is interesting. Please Read!</p>
+                <span class="read-article-button">Read Article</span>
+            </div>
+        </div>
+    </div>
+    <div class="home-links">
+        <div class="home-section-title">Links</div>
     </div>
 </section>
