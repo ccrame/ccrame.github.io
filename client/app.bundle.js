@@ -1,9 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var angular = require('angular');
-var blogController = require('./app/blog/blog.js');
-var homeController= require('./app/home/home.js');
-var app = angular.module('main',[require('angular-ui-router')])
+var angular        = require('angular'),
+blogController     = require('./app/blog/blog.js'),
+homeController     = require('./app/home/home.js'),
+projectsController = require('./app/projects/projects.js'),
+aboutController    = require('./app/about/about.js');
 
+var app = angular.module('main',[require('angular-ui-router')])
 
 //CONFIG
 .config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
@@ -17,17 +19,24 @@ var app = angular.module('main',[require('angular-ui-router')])
     })
     .state('projects', {
       url: '/projects',
-      templateUrl: './app/projects/projects.html'
+      templateUrl: './app/projects/projects.html',
+      controller: projectsController
     })
     .state('about',{
       url: '/about',
-      templateUrl: './app/about/about.html'
+      templateUrl: './app/about/about.html',
+      controller: aboutController
     })
     .state('blog',{
       url: '/blog',
       templateUrl: './app/blog/blog.html',
       controller: blogController
     })
+    .state('article',{
+      url:'/blog/:article',
+      templateUrl: './app/blog/blog.html',
+      controller: blogController
+    });
 }])
 
 
@@ -47,10 +56,11 @@ var app = angular.module('main',[require('angular-ui-router')])
     $scope.show = !$scope.show;
   };
 
-  $scope.redirect = function(loc,num){
+  $scope.redirect = function(loc,num,stateParams){
     $scope.selected = [0,0,0,0];
     $scope.selected[num] = 1;
-    $state.go(loc,{loc: 'testing'});
+    console.log('app.js ',stateParams);
+    $state.go(loc,stateParams);
   };
 
   $scope.visible = false;
@@ -60,11 +70,12 @@ var app = angular.module('main',[require('angular-ui-router')])
   };
 
   $scope.selected = [0,0,0,0];
-  
+
   var init = function(){
     switch($state.current.name){
       case "home":     $scope.selected[0] = 1; break;
-      case "blog":     $scope.selected[1] = 1; break;
+      case "blog": 
+      case "article":    $scope.selected[1] = 1; break;
       case "projects": $scope.selected[2] = 1; break;
       case "about":    $scope.selected[3] = 1; break;
       default:         setTimeout(init,50);
@@ -73,42 +84,77 @@ var app = angular.module('main',[require('angular-ui-router')])
 
   init();
 }]);
-},{"./app/blog/blog.js":2,"./app/home/home.js":3,"./factory.js":4,"angular":7,"angular-ui-router":5}],2:[function(require,module,exports){
-module.exports = function($scope,appFactory){
-  var samples = appFactory.firebase.child('sample');
-  $scope.samples = {};
+},{"./app/about/about.js":2,"./app/blog/blog.js":3,"./app/home/home.js":4,"./app/projects/projects.js":5,"./factory.js":6,"angular":9,"angular-ui-router":7}],2:[function(require,module,exports){
 
-  samples.on('value',function(articles){
-    articles = articles.val();
-    samples.off();
-    for(var article in articles){
+},{}],3:[function(require,module,exports){
+module.exports = function($scope, appFactory, $state, $stateParams){
+  var articlesRef = appFactory.firebase.child('articles');
+  $scope.samples = {};
+  $scope.articleData = null;
+  $scope.articleMessage = "Blog Posts"
+
+  if($stateParams.article){
+    var article = articlesRef.child($stateParams.article);
+
+    article.on("value",function(info){
+      info = info.val();
+      article.off();
       appFactory.update($scope,function(scope){
-        scope.samples[articles[article]] = true;
+        scope.articleData = info;
+        scope.articleMessage = "More Blog Posts";
+      });
+    });
+  }
+
+  articlesRef.on('value',function(articles){
+    articles = articles.val();
+    articlesRef.off();
+    var keys = Object.keys(articles);
+    for(var i = keys.length - 1; i >= 0; --i){
+      appFactory.update($scope,function(scope){
+        scope.samples[keys[i]] = articles[keys[i]];
       });
     }
   });
+
 };
-},{}],3:[function(require,module,exports){
-module.exports = function($scope,appFactory){
+},{}],4:[function(require,module,exports){
+module.exports = function($scope, appFactory, $state, $stateParams){
+
   $scope.recents = {};
+
+  $scope.homeTab = [1,0];
+
+  $scope.selectHomeTab = function(num){
+    $scope.homeTab = [0,0];
+    $scope.homeTab[num] = 1;
+  };
 
   //initialize
   (function(){
-    var recents = appFactory.firebase.child("sample");
+    var recents = appFactory.firebase.child("articles");
     recents.on("value",function(item){
       item = item.val();
       recents.off();
       appFactory.update($scope,function(scope){
-        for(var key in item){
-          console.log("key is ", key);
-          scope.recents[key] = item[key];
+        var count = 0;
+        var keys = Object.keys(item);
+        for(var i = keys.length - 1; i >= 0; --i){
+          scope.recents[keys[i]] = item[keys[i]];
+          if(++count >= 5){
+            break;
+          }
         }
       });
     });
   })();
 
 };
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+module.exports = function($scope,appFactory,$state){
+
+};
+},{}],6:[function(require,module,exports){
 var Firebase = require('client-firebase');
 module.exports = function(){
   var obj = {};
@@ -135,7 +181,7 @@ module.exports = function(){
 
   return obj;
 };
-},{"client-firebase":8}],5:[function(require,module,exports){
+},{"client-firebase":10}],7:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4506,7 +4552,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33411,11 +33457,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":6}],8:[function(require,module,exports){
+},{"./angular":8}],10:[function(require,module,exports){
 (function() {var h,aa=this;function n(a){return void 0!==a}function ba(){}function ca(a){a.rb=function(){return a.ld?a.ld:a.ld=new a}}
 function da(a){var b=typeof a;if("object"==b)if(a){if(a instanceof Array)return"array";if(a instanceof Object)return b;var c=Object.prototype.toString.call(a);if("[object Window]"==c)return"object";if("[object Array]"==c||"number"==typeof a.length&&"undefined"!=typeof a.splice&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("splice"))return"array";if("[object Function]"==c||"undefined"!=typeof a.call&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("call"))return"function"}else return"null";
 else if("function"==b&&"undefined"==typeof a.call)return"object";return b}function ea(a){var b=da(a);return"array"==b||"object"==b&&"number"==typeof a.length}function q(a){return"string"==typeof a}function fa(a){return"number"==typeof a}function ga(a){var b=typeof a;return"object"==b&&null!=a||"function"==b}function ha(a,b,c){return a.call.apply(a.bind,arguments)}

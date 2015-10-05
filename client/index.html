@@ -11,7 +11,7 @@
 
 
 
-<body ng-app="main" ng-controller="mainController" ng-class="{stopScroll:show}">
+<body ng-app="main" ng-controller="mainController">
     <nav ng-click="openMobileNav()" ng-class="{'show':show}" class="nav-mobile-menu">
         <div ng-class="{selected: selected[0]}" ng-click="redirect('home',0)" class="nav-mobile-item">Home</div><!--
      --><div ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)" class="nav-mobile-item">Blog</div><!--
@@ -50,7 +50,7 @@
     <footer>
         <div class="footer-padding"></div>
         <div>
-            <span class="footer-content">Contact &nbsp;&nbsp;| &nbsp;&nbsp;Details &nbsp;&nbsp;| &nbsp;&nbsp;Etc</span>
+            <span class="footer-content">&copy; 2015 Charles Crame</span>
         </div>
     </footer>
 </body>

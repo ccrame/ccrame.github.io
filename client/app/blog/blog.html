@@ -1,10 +1,14 @@
 <section>
-    <aside class="article-title-container">
-        <div class="article-title" ng-repeat="(key, title) in samples">{{key}}</div>
-    </aside>
     <div class="article-content-container">
-        <article class="article-content">
-            <p>This is a test paragraph that is bla bla bla. This is aThis is a test paragraph that is bla bla bla. This is aThis is a test paragraph that is bla bla bla. This is aThis is a test paragraph that is bla bla bla. This is aThis is a test paragraph that is bla bla bla. This is aThis is a test paragraph that is bla bla bla. This is aThis is a test paragraph that is bla bla bla. This is aThis is a test paragraph that is bla bla bla. This is aThis is a test paragraph that is bla bla bla. This is a</p>
-        </article>
+        <div class="title" ng-bind="articleData.title"></div>
+        <article class="article-content" ng-include="articleData.url"></article>
+    </div>
+
+    <div class="article-list-container">
+        <div class="title" ng-bind="articleMessage"></div>
+        <div class="article-list-content" ng-repeat="(key, value) in samples">
+            <span class="article-title" ng-click="redirect('article',1,{article:key})" ng-bind="value.title"></span>&nbsp;
+            <span class="article-description" ng-bind="value.description"></span>&nbsp;
+        </div>
     </div>
 </section>

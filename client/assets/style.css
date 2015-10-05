@@ -27,6 +27,15 @@ a{
   color: white;
 }
 
+pre{
+  overflow: auto;
+  background: black;
+}
+
+code{
+  font-size: 1.3em;
+  color: #777;
+}
 
 /*COLORS
 
@@ -216,6 +225,7 @@ header{
   display: inline-block;
   left: 1%;
   width: 98%;
+  max-width: 1200px;
   margin: 10px 0;
   min-height: 500px;
 }
@@ -230,32 +240,74 @@ header{
   margin: auto;
 }
 
-.home-section-title{
-  font-size: 2em;
-  font-family: 'Raleway', sans-serif;
-  margin-bottom: 20px;
+.home-recents-nav{
+  text-align: left;
+  margin-left: 30px;
 }
+
+.home-hover{
+  position: relative;
+  top:20px;
+  width: 100%;
+  height: 20px;
+  background: black;
+  transition: top .5s;
+}
+
+.home-section-title{
+  display: inline-block;
+  font-size: 1em;
+  font-family: 'Raleway', sans-serif;
+  margin: 0 5px 10px 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.home-section-title:hover .home-hover{
+  top:12px;
+}
+
+.selected-home-tab .home-hover, .selected-home-tab:hover .home-hover{
+  background: orange;
+  top: 8px;
+}
+
+.selected-home-tab {
+  color: orange;
+}
+
 
 .home-recents, .home-links{
   vertical-align: top;
   display: inline-block;
-  width: 60%;
-  min-width: 300px;
+  width: 70%;
   margin: 10px 0;
   border-radius: 5px;
 }
 
+.home-recents{
+  min-width: 700px;
+}
+
 .home-links{
-  width: 35%;
+  width: 25%;
+}
+
+.article-info{
+  background: #aaa;
+  display: none;
+  float: left;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
 }
 
 .home-recents-container{
-  display: inline-block;
-  margin: 5px 20px;
-  min-width: 250px;
-  max-width: 300px;
-  width: 40%;
-  min-height: 300px;
+  display: block;
+  vertical-align: top;
+  float: left;
+  min-width: 550px;
+  width: 100%;
 }
 
 .home-recents-title{
@@ -264,15 +316,28 @@ header{
   line-height: 45px;
 }
 
+.home-recents-description{
+  vertical-align: top;
+  display: inline-block;
+  width: 60%;
+}
+
 .home-recents-image{
+  display: inline-block;
   margin: auto;
   min-height: 150px;
   max-height: 250px;
   height: 50%;
-  min-width: 150px;
+  min-width: 100px;
   max-width: 250px;
-  width:50%;
-  background: yellow;
+  width:30%;
+  overflow: hidden;
+}
+
+.home-recents-image img{
+  max-height: 250px;
+  max-width: 250px;
+  padding: 10px;
 }
 
 .read-article-button{
@@ -287,59 +352,72 @@ header{
   cursor: pointer;
 }
 
-.article-info{
-  background: #f8f8f8;
-  display: inline-block;
-  float: left;
-  width: 150px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  transition: background .5s;
-}
-
-.article-info:hover{
-  background: orange;
+.read-article-button:hover{
+  background: lightblue;
 }
 
 .home-recents-content{
-  clear: both;
-  background: #f8f8f8;
-  padding: 10px;
-  left: 0px;
+  display: inline-block;
+  float: left;
+  width: 85%;
+  border: 3px solid #f8f8f8;
   border-radius: 5px;
-  border-top-left-radius: 0;
+  padding: 0;
+  margin: 0;
 }
 
 
 /****************
   Blog Styling
 *****************/
-.article-title-container{
-  display: inline-block;
-  width: 200px;
-  margin-right: 20px;
-}
-
-.article-title{
-  padding-left: 20px;
-  height: 50px;
-  line-height: 50px;
-  transition: background .25s;
-}
-
-.article-title:hover{
-  background: #ee7311;
-  cursor: pointer;
-}
-
 .article-content-container{
-  display: block;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  margin: 40px auto 0 auto;
 }
 
 .article-content{
-  margin: 0 20px;
+  margin: 20px auto;
+  width: 70%;
+  text-align: left;
 }
 
+.article-list-container{
+  display: block;
+  width: 70%;
+  margin: 20px auto 0 auto;
+}
+
+.article-list-content{
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+}
+
+.article-title{
+  padding: 10px;
+  height: 60px;
+  color: red;
+  font-size: 1.2em;
+  transition: color .25s;
+}
+
+.article-title:hover{
+  color: lightblue;
+  cursor: pointer;
+}
+
+.article-description{
+  font-style: italic;
+  font-size: .8em;
+}
+
+.title{
+  font-family: 'Raleway', sans-serif;
+  font-size: 2em;
+  text-align: center;
+}
 
 /****************
   Project
@@ -348,30 +426,59 @@ header{
   display: block;
   min-height: 500px;
   background: #ee7311;
+  background: none;
   width: 100%;
   margin: auto;
   text-align: center;
 }
 
-.project-left, .project-right{
-  display: inline-block;
-  vertical-align: top;
-  min-width: 300px;
-  width: 49.5%;
-  height: 400px;
-  background: red;
-  border: 1px solid black;
+.project-container a{
+  display: block;
+  color: lightblue;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.5em;
 }
 
-.project-right{
-  background: blue;
+.project-title{
+  font-family: 'Raleway', sans-serif;
+  font-size: 2em;
+  margin: 40px auto 100px auto;
+}
+
+.project-container img{
+  display: inline-block;
+  margin: auto;
+  width: 700px;
+  height: auto;
+}
+
+.project-description{
+  margin: auto;
+  margin-bottom: 70px;
+  background: black;
+  width: 700px;
+  min-height: 300px;
 }
 
 
 /****************
   About
 *****************/
+.about-container{
+  text-align: center;
+}
 
+.about-title{
+  margin: 40px auto 0 auto;
+  font-size: 2em;
+  font-family: 'Raleway', sans-serif;
+}
+
+.about-content{
+  margin: auto;
+  width: 60%;
+  text-align: left;
+}
 
 
 /****************************************************
@@ -384,7 +491,7 @@ footer{
   line-height: 200px;
   display: block;
   min-height: 200px;
-  background: linear-gradient(to bottom, #162e33, #061329);
+  background: #282e28;
 }
 
 .footer-padding{
@@ -411,7 +518,7 @@ footer{
   padding-top: 15%;
   top: -9999px;
   transition: top .5s;
-  background: rgba(0,0,0,.7);
+  background: rgba(0,0,0,.9);
 }
 
 .nav-mobile-item{
@@ -425,24 +532,26 @@ footer{
   top: 0;
 }
 
-.stopScroll{
-  height: 100%;
-  overflow: hidden;
-}
-
 @media (max-width: 700px){
   header{
     height: 50px;
   }
-
-
 
   footer{
     min-height: 120px;
     line-height: 120px;
   }
 
+  .container{
+    width: 100%;
+    margin:0;
+    padding:0;
+  }
+
+
+
  /* Header related styling */ 
+
   .nav-bar{
     text-align: right;
   }
@@ -460,14 +569,74 @@ footer{
     left: 10px;
   }
 
+
+
   /* Home related styling */
+
   .home-recents-content{
-    min-height: 320px;
+    min-height: 200px;
+    width: 100%;
+  }
+
+  .home-recents-container{
+    min-width: 300px;
+  }
+
+  .home-recents-nav{
+    text-align: center;
+    margin: 0;
   }
 
   .home-recents{
     text-align: center;
+    min-width: 300px;
+    width:100%;
   }
+
+  .home-recents-image{
+    min-width: 100px;
+    width: 100px;
+    min-height: 100px;
+    height: 100px;
+  }
+
+  .home-recents-image img{
+    height:100px;
+    width: auto;
+  }
+
+  .article-info{
+    display: none;
+  }
+
+
+  /* Blog Styling */
+
+  .article-content{
+    width: 90%;
+  }
+
+  .article-list-container{
+    width: 100%;
+    text-align: center;
+  }
+
+  .article-description{
+    display: none;
+  }
+
+
+
+  /* Project Styling */
+
+.project-item{
+  width: 100%;
+}
+
+.project-container img{
+  width: 80%;
+  height: auto;
+}
   
   /* Hide these elements in mobile mode */
   .nav-item{ display: none; }

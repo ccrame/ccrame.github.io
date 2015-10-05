@@ -1,15 +1,21 @@
 <section class="home-container">
     <div class="home-recents">
-        <div class="home-section-title">Recent Articles</div>
-        <div class="home-recents-container" ng-repeat="(key,value) in recents">
-            <div class="article-info">Share</div>
-            <div class="home-recents-content">
-                <div class="home-recents-image"></div>
-                <span class="home-recents-title">{{ value }}</span>
-                <p>This is a description of the article. This is why this article is interesting. Please Read!</p>
-                <span class="read-article-button">Read Article</span>
+        <div class="home-recents-nav">
+            <div class="home-section-title" ng-class="{'selected-home-tab':homeTab[0]}" ng-click="selectHomeTab(0)">Recent Posts <div class="home-hover"></div></div>
+            <div class="home-section-title" ng-class="{'selected-home-tab':homeTab[1]}" ng-click="selectHomeTab(1)">Around The Web <div class="home-hover"></div></div>
+        </div>
+        <div ng-show="homeTab[0]" class="home-recents-container" ng-repeat="(key,value) in recents">
+            <div class="article-info">+</div><!--
+         --><div class="home-recents-content">
+                <div class="home-recents-description">
+                    <span class="home-recents-title">{{ value.title }}</span>
+                    <p ng-bind="value.description"></p>
+                    <span class="read-article-button" ng-click="redirect('article',1,{article:key})">Read Article</span>
+                </div>
+                <div class="home-recents-image"><img ng-src="http://cnafinance.com/wp-content/uploads/2015/03/Tech-Stock-News-Today.jpg" alt=""></div>
             </div>
         </div>
+        <div ng-show="homeTab[1]" class="home-recents-container"></div>
     </div>
     <div class="home-links">
         <div class="home-section-title">Links</div>

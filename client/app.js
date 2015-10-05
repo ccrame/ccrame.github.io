@@ -1,8 +1,10 @@
-var angular = require('angular');
-var blogController = require('./app/blog/blog.js');
-var homeController= require('./app/home/home.js');
-var app = angular.module('main',[require('angular-ui-router')])
+var angular        = require('angular'),
+blogController     = require('./app/blog/blog.js'),
+homeController     = require('./app/home/home.js'),
+projectsController = require('./app/projects/projects.js'),
+aboutController    = require('./app/about/about.js');
 
+var app = angular.module('main',[require('angular-ui-router')])
 
 //CONFIG
 .config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
@@ -16,17 +18,24 @@ var app = angular.module('main',[require('angular-ui-router')])
     })
     .state('projects', {
       url: '/projects',
-      templateUrl: './app/projects/projects.html'
+      templateUrl: './app/projects/projects.html',
+      controller: projectsController
     })
     .state('about',{
       url: '/about',
-      templateUrl: './app/about/about.html'
+      templateUrl: './app/about/about.html',
+      controller: aboutController
     })
     .state('blog',{
       url: '/blog',
       templateUrl: './app/blog/blog.html',
       controller: blogController
     })
+    .state('article',{
+      url:'/blog/:article',
+      templateUrl: './app/blog/blog.html',
+      controller: blogController
+    });
 }])
 
 
@@ -46,10 +55,11 @@ var app = angular.module('main',[require('angular-ui-router')])
     $scope.show = !$scope.show;
   };
 
-  $scope.redirect = function(loc,num){
+  $scope.redirect = function(loc,num,stateParams){
     $scope.selected = [0,0,0,0];
     $scope.selected[num] = 1;
-    $state.go(loc,{loc: 'testing'});
+    console.log('app.js ',stateParams);
+    $state.go(loc,stateParams);
   };
 
   $scope.visible = false;
@@ -59,11 +69,12 @@ var app = angular.module('main',[require('angular-ui-router')])
   };
 
   $scope.selected = [0,0,0,0];
-  
+
   var init = function(){
     switch($state.current.name){
       case "home":     $scope.selected[0] = 1; break;
-      case "blog":     $scope.selected[1] = 1; break;
+      case "blog": 
+      case "article":    $scope.selected[1] = 1; break;
       case "projects": $scope.selected[2] = 1; break;
       case "about":    $scope.selected[3] = 1; break;
       default:         setTimeout(init,50);
