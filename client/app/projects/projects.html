@@ -1,18 +1,32 @@
 <section class="project-container">
     <div class="project-title">Projects</div>
-
-    <img src="./assets/linelevel.png" alt="Linelevel">
-    <div class="project-description"> 
-        <a href="http://linelevel.herokuapp.com"> Linelevel </a> 
+    <div class="project-nav">
+        <div class="project-nav-item pointer" ng-class="{'selected-project':selected[0]}" ng-click="selectProject(0)">Linelevel<div class="hover-element"></div></div>
+        <div class="project-nav-item pointer" ng-class="{'selected-project':selected[1]}" ng-click="selectProject(1)">Political Profiler<div class="hover-element"></div></div>
+        <div class="project-nav-item pointer" ng-class="{'selected-project':selected[2]}" ng-click="selectProject(2)">Challenge Accepted!<div class="hover-element"></div></div>
     </div>
 
-    <img src="./assets/politicalprofiler.png" alt="Political Profiler">
-    <div class="project-description">
-        <a href="https://politicalprofiler.herokuapp.com"> Political Profiler</a> 
+    <div ng-if="selected[0]">
+        <img src="./client/assets/linelevel.png" alt="Linelevel">
+        <div class="project-description"> 
+            <a href="http://linelevel.herokuapp.com"> Linelevel </a> 
+            <p>A social media app where artists can stream videos to their fans</p>
+        </div>
     </div>
 
-    <img src="./assets/challengeaccepted.png" alt="Challenge Accepted!">
-    <div class="project-description"> 
-        <a href="https://heraapphrr7.herokuapp.com/#!/"> Challenge Accepted </a> 
+    <div ng-if="selected[1]">
+        <img src="./client/assets/politicalprofiler.png" alt="Political Profiler">
+        <div class="project-description">
+            <a href="https://politicalprofiler.herokuapp.com"> Political Profiler</a>
+            <p>A site that allows users to compare politicians' voting histories</p>
+        </div>
+    </div>
+
+    <div ng-if="selected[2]">
+        <img src="./client/assets/challengeaccepted.png" alt="Challenge Accepted!">
+        <div class="project-description"> 
+            <a href="https://heraapphrr7.herokuapp.com/#!/"> Challenge Accepted </a>
+            <p>A web app where users can manage their daily tasks and share collections of tasks</p>
+        </div>
     </div>
 </section>

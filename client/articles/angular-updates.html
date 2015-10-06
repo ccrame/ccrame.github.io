@@ -1,0 +1,68 @@
+<p><br>Using Angular? Two way data-binding not working? This is a common problem that can cause headaches. A quick search on your favorite search engine will show that many people have the same problem. This artcile will go over two common ways to make your $scope update again.<br></p>
+<p>$apply<br>While both methods are simple, this is the simpler of the two. This provides a quick way to use a callback to force the scope to update along with your changes. Here is a simple example using Firebase listeners.</p>
+<pre><code>
+
+var ref = new Firebase('https://data.firebaseio.com');
+var data = ref.child("data");
+$scope.array = [];
+
+data.on("child_added",function(info){
+  $scope.$apply(function(){
+    $scope.array.push(info.val());
+  });
+});
+
+</code></pre>
+
+<p>As you can see, it’s very simple to use. Just use apply to enclose the statement that refuses to update on its own. After using this, you will notice that the data does indeed update. You may also notice errors springing up. Don’t worry. The fix is just as simple.</p>
+<pre><code>
+
+  data.on("child_added", function(info){
+    if(!$scope.$$phase){
+      $scope.$apply(function(){
+        $scope.array.push(info.val());
+      })
+    } else {
+      $scope.array.push(info.val());
+    }
+  });
+
+</code></pre>
+
+<p>The error is caused by Angular attempting to perform an action multiple times. By adding the check to <code>$scope.$$phase</code>, the code makes sure that the action is only performed once per cycle. Now, if you are planning to use this code throughout your controllers, it may be a good idea to put this code into a factory:</p>
+<pre><code>
+
+  // In the Factory 'appFactory'
+  Obj.apply = function(scope,cb){
+    if(!scope.$$phase){
+      scope.$apply(function(){
+        cb.call(this,scope);
+      })
+    } else {
+      cb.call(this,scope);
+    }
+  };
+
+  // In the Controller
+  data.on("child_added", function(info){
+    appFactory.apply($scope,function(scope){
+      scope.array.push(info.val());
+    });
+  });
+
+</code></pre>
+
+<p>Now it is much simpler to re-use this code within any controller.</p>
+<p>$watch<br>This is another way to update the scope when it refuses to do so. The $watch method takes two arguments, both callback functions. The first callback requires a return statement and it is the change in this statement that triggers the second callback function.</p>
+<pre><code>
+  $scope.messages= [];
+  $scope.lastMessage = '';
+
+  $scope.$watch(function(scope){
+    return scope.messages.length;
+  }, function(newVal,oldVal){
+    $scope.lastMessage = $scope.messages[$scope.messages.length - 1];
+  });
+</code></pre>
+
+<p>As you can see, the second callback takes two arguments.  The first argument is the new value returned by the previous callback function.  The second argument is the old value, or the original value of the previous callback function to which the new value is compared. When these two values are difference from each other, the second callback function is triggered. In the example above, neither value from the second callback function is used. However, it is still triggered due to the difference in the two values. </p>

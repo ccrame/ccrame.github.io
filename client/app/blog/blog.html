@@ -1,14 +1,15 @@
 <section>
-    <div class="article-content-container">
+    <div ng-if="articleData !== null" class="article-content-container">
         <div class="title" ng-bind="articleData.title"></div>
+        <div class="article-date" ng-bind="articleData.date"></div>
         <article class="article-content" ng-include="articleData.url"></article>
     </div>
 
     <div class="article-list-container">
         <div class="title" ng-bind="articleMessage"></div>
-        <div class="article-list-content" ng-repeat="(key, value) in samples">
-            <span class="article-title" ng-click="redirect('article',1,{article:key})" ng-bind="value.title"></span>&nbsp;
-            <span class="article-description" ng-bind="value.description"></span>&nbsp;
+        <div class="article-list-content" ng-repeat="article in articles | orderBy: 'date':true">
+            <div class="article-title" ng-click="redirect('article',1,{article:article.key})" ng-bind="article.title"></div>
+            <div class="article-description" ng-bind="article.description"></div>
         </div>
     </div>
 </section>

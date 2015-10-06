@@ -1,6 +1,6 @@
 module.exports = function($scope, appFactory, $state, $stateParams){
   var articlesRef = appFactory.firebase.child('articles');
-  $scope.samples = {};
+  $scope.articles = [];
   $scope.articleData = null;
   $scope.articleMessage = "Blog Posts"
 
@@ -12,6 +12,7 @@ module.exports = function($scope, appFactory, $state, $stateParams){
       article.off();
       appFactory.update($scope,function(scope){
         scope.articleData = info;
+        scope.articleData.date = 'Published on ' + new Date(info.date).toDateString();
         scope.articleMessage = "More Blog Posts";
       });
     });
@@ -23,7 +24,8 @@ module.exports = function($scope, appFactory, $state, $stateParams){
     var keys = Object.keys(articles);
     for(var i = keys.length - 1; i >= 0; --i){
       appFactory.update($scope,function(scope){
-        scope.samples[keys[i]] = articles[keys[i]];
+        articles[keys[i]].key = keys[i];
+        scope.articles.push(articles[keys[i]]);
       });
     }
   });

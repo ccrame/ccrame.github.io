@@ -1,6 +1,6 @@
 module.exports = function($scope, appFactory, $state, $stateParams){
 
-  $scope.recents = {};
+  $scope.recents = [];
 
   $scope.homeTab = [1,0];
 
@@ -19,7 +19,8 @@ module.exports = function($scope, appFactory, $state, $stateParams){
         var count = 0;
         var keys = Object.keys(item);
         for(var i = keys.length - 1; i >= 0; --i){
-          scope.recents[keys[i]] = item[keys[i]];
+          item[keys[i]].key = keys[i];
+          scope.recents.push(item[keys[i]]);
           if(++count >= 5){
             break;
           }

@@ -3,10 +3,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charles Crame</title>
-    <script src="app.bundle.js"></script>
+    <script src="client/app.bundle.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="./assets/style.css">
-    <link rel="icon" href="./assets/logo.png">
+    <link rel="stylesheet" href="client/assets/style.css">
+    <link rel="icon" href="client/assets/logo.png">
 </head>
 
 
@@ -21,7 +21,7 @@
     <header>
         <nav class="nav-bar">
             <nav ng-click="openMobileNav()" class="hamburger fa fa-bars fa-2x"></nav>
-            <div class="site-logo" ng-click="redirect('home',0)"><img src="./assets/logo.png" alt="home"><div class="site-title">Charles Crame</div></div>
+            <div class="site-logo" ng-click="redirect('home',0)"><img src="client/assets/logo.png" alt="home"><div class="site-title">Charles Crame</div></div>
             <div ng-class="{selected: selected[0]}" ng-click="redirect('home',0)" class="nav-item">Home<div class="nav-hover"></div></div><!--
          --><div ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)" class="nav-item">Blog<div class="nav-hover"></div></div><!--
          --><div ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)" class="nav-item">Projects<div class="nav-hover"></div></div><!--
@@ -29,8 +29,8 @@
         </nav>
 
 
-        <div class="contact-info"> 
-            <div class="contact-container" ng-class="{visible:visible}">
+        <div class="contact-info" ng-class="{visible:visible}"> 
+            <div class="contact-container">
                 <span class="button" ng-click="toggleVisibility()">Contact</span>
                 <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x fa-inverse"></i></a> 
                 <a href="https://twitter.com/cpcrame"><i class="fa fa-twitter fa-2x fa-inverse"></i></a>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="header-background">
-            <img src="./assets/space-view2.jpg" alt="space" ng-class="{home:selected[0],blog:selected[1],projects:selected[2],about:selected[3]}">
+            <img src="client/assets/collage.jpg" alt="space" ng-class="{home:selected[0],blog:selected[1],projects:selected[2],about:selected[3]}">
         </div>
     </header>
 

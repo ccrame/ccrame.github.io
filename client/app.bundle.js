@@ -14,27 +14,27 @@ var app = angular.module('main',[require('angular-ui-router')])
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: './app/home/home.html',
+      templateUrl: 'client/app/home/home.html',
       controller: homeController
     })
     .state('projects', {
       url: '/projects',
-      templateUrl: './app/projects/projects.html',
+      templateUrl: 'client/app/projects/projects.html',
       controller: projectsController
     })
     .state('about',{
       url: '/about',
-      templateUrl: './app/about/about.html',
+      templateUrl: 'client/app/about/about.html',
       controller: aboutController
     })
     .state('blog',{
       url: '/blog',
-      templateUrl: './app/blog/blog.html',
+      templateUrl: 'client/app/blog/blog.html',
       controller: blogController
     })
     .state('article',{
       url:'/blog/:article',
-      templateUrl: './app/blog/blog.html',
+      templateUrl: 'client/app/blog/blog.html',
       controller: blogController
     });
 }])
@@ -59,7 +59,6 @@ var app = angular.module('main',[require('angular-ui-router')])
   $scope.redirect = function(loc,num,stateParams){
     $scope.selected = [0,0,0,0];
     $scope.selected[num] = 1;
-    console.log('app.js ',stateParams);
     $state.go(loc,stateParams);
   };
 
@@ -72,6 +71,7 @@ var app = angular.module('main',[require('angular-ui-router')])
   $scope.selected = [0,0,0,0];
 
   var init = function(){
+    $scope.selected = [0,0,0,0];
     switch($state.current.name){
       case "home":     $scope.selected[0] = 1; break;
       case "blog": 
@@ -82,14 +82,20 @@ var app = angular.module('main',[require('angular-ui-router')])
     };//end of switch
   };
 
+  $scope.$watch(function(){return $state.current.name;},function(){
+    init();
+  });
+
   init();
 }]);
 },{"./app/about/about.js":2,"./app/blog/blog.js":3,"./app/home/home.js":4,"./app/projects/projects.js":5,"./factory.js":6,"angular":9,"angular-ui-router":7}],2:[function(require,module,exports){
+module.exports = function($scope,appFactory){
 
+};
 },{}],3:[function(require,module,exports){
 module.exports = function($scope, appFactory, $state, $stateParams){
   var articlesRef = appFactory.firebase.child('articles');
-  $scope.samples = {};
+  $scope.articles = [];
   $scope.articleData = null;
   $scope.articleMessage = "Blog Posts"
 
@@ -101,6 +107,7 @@ module.exports = function($scope, appFactory, $state, $stateParams){
       article.off();
       appFactory.update($scope,function(scope){
         scope.articleData = info;
+        scope.articleData.date = 'Published on ' + new Date(info.date).toDateString();
         scope.articleMessage = "More Blog Posts";
       });
     });
@@ -112,7 +119,8 @@ module.exports = function($scope, appFactory, $state, $stateParams){
     var keys = Object.keys(articles);
     for(var i = keys.length - 1; i >= 0; --i){
       appFactory.update($scope,function(scope){
-        scope.samples[keys[i]] = articles[keys[i]];
+        articles[keys[i]].key = keys[i];
+        scope.articles.push(articles[keys[i]]);
       });
     }
   });
@@ -121,7 +129,7 @@ module.exports = function($scope, appFactory, $state, $stateParams){
 },{}],4:[function(require,module,exports){
 module.exports = function($scope, appFactory, $state, $stateParams){
 
-  $scope.recents = {};
+  $scope.recents = [];
 
   $scope.homeTab = [1,0];
 
@@ -140,7 +148,8 @@ module.exports = function($scope, appFactory, $state, $stateParams){
         var count = 0;
         var keys = Object.keys(item);
         for(var i = keys.length - 1; i >= 0; --i){
-          scope.recents[keys[i]] = item[keys[i]];
+          item[keys[i]].key = keys[i];
+          scope.recents.push(item[keys[i]]);
           if(++count >= 5){
             break;
           }
@@ -152,7 +161,12 @@ module.exports = function($scope, appFactory, $state, $stateParams){
 };
 },{}],5:[function(require,module,exports){
 module.exports = function($scope,appFactory,$state){
+  $scope.selected = [1,0,0];
 
+  $scope.selectProject = function(num){
+    $scope.selected = [0,0,0];
+    $scope.selected[num] = 1;
+  };
 };
 },{}],6:[function(require,module,exports){
 var Firebase = require('client-firebase');
@@ -171,13 +185,13 @@ module.exports = function(){
   };
 
 
-  // obj._2 = "kwwsv=22surmwhvwlqj1iluhedvhlr1frp";
-  // obj._1 = function(a){
-  //   return a.replace(/./g,function(a){return String.fromCharCode(a.charCodeAt(0)-3);});
-  // };
+  obj._2 = "kwwsv=22surmwhvwlqj1iluhedvhlr1frp";
+  obj._1 = function(a){
+    return a.replace(/./g,function(a){return String.fromCharCode(a.charCodeAt(0)-3);});
+  };
 
-  // obj.firebase = new Firebase(obj._1(obj._2));
-  obj.firebase = new Firebase('https://projtesting.firebaseio.com');
+  obj.firebase = new Firebase(obj._1(obj._2));
+  // obj.firebase = new Firebase('https://projtesting.firebaseio.com');
 
   return obj;
 };

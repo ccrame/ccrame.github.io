@@ -13,27 +13,27 @@ var app = angular.module('main',[require('angular-ui-router')])
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: './app/home/home.html',
+      templateUrl: 'client/app/home/home.html',
       controller: homeController
     })
     .state('projects', {
       url: '/projects',
-      templateUrl: './app/projects/projects.html',
+      templateUrl: 'client/app/projects/projects.html',
       controller: projectsController
     })
     .state('about',{
       url: '/about',
-      templateUrl: './app/about/about.html',
+      templateUrl: 'client/app/about/about.html',
       controller: aboutController
     })
     .state('blog',{
       url: '/blog',
-      templateUrl: './app/blog/blog.html',
+      templateUrl: 'client/app/blog/blog.html',
       controller: blogController
     })
     .state('article',{
       url:'/blog/:article',
-      templateUrl: './app/blog/blog.html',
+      templateUrl: 'client/app/blog/blog.html',
       controller: blogController
     });
 }])
@@ -58,7 +58,6 @@ var app = angular.module('main',[require('angular-ui-router')])
   $scope.redirect = function(loc,num,stateParams){
     $scope.selected = [0,0,0,0];
     $scope.selected[num] = 1;
-    console.log('app.js ',stateParams);
     $state.go(loc,stateParams);
   };
 
@@ -71,6 +70,7 @@ var app = angular.module('main',[require('angular-ui-router')])
   $scope.selected = [0,0,0,0];
 
   var init = function(){
+    $scope.selected = [0,0,0,0];
     switch($state.current.name){
       case "home":     $scope.selected[0] = 1; break;
       case "blog": 
@@ -80,6 +80,10 @@ var app = angular.module('main',[require('angular-ui-router')])
       default:         setTimeout(init,50);
     };//end of switch
   };
+
+  $scope.$watch(function(){return $state.current.name;},function(){
+    init();
+  });
 
   init();
 }]);

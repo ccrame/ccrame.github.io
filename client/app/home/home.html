@@ -1,23 +1,36 @@
 <section class="home-container">
     <div class="home-recents">
+
         <div class="home-recents-nav">
-            <div class="home-section-title" ng-class="{'selected-home-tab':homeTab[0]}" ng-click="selectHomeTab(0)">Recent Posts <div class="home-hover"></div></div>
-            <div class="home-section-title" ng-class="{'selected-home-tab':homeTab[1]}" ng-click="selectHomeTab(1)">Around The Web <div class="home-hover"></div></div>
+            <div class="home-section-title pointer" ng-class="{'selected-home-tab':homeTab[0]}" ng-click="selectHomeTab(0)">Recent Posts <div class="hover-element"></div></div>
+            <div class="home-section-title pointer" ng-class="{'selected-home-tab':homeTab[1]}" ng-click="selectHomeTab(1)">Around The Web <div class="hover-element"></div></div>
         </div>
-        <div ng-show="homeTab[0]" class="home-recents-container" ng-repeat="(key,value) in recents">
+
+        <div ng-show="homeTab[0]" class="home-recents-container" ng-repeat="item in recents | orderBy: 'date':true">
             <div class="article-info">+</div><!--
          --><div class="home-recents-content">
                 <div class="home-recents-description">
-                    <span class="home-recents-title">{{ value.title }}</span>
-                    <p ng-bind="value.description"></p>
-                    <span class="read-article-button" ng-click="redirect('article',1,{article:key})">Read Article</span>
+                    <p class="home-recents-title">{{ item.title }}</p>
+                    <p ng-bind="item.description"></p>
+                    <span class="read-article-button" ng-click="redirect('article',1,{article:item.key})">Read Article</span>
                 </div>
-                <div class="home-recents-image"><img ng-src="http://cnafinance.com/wp-content/uploads/2015/03/Tech-Stock-News-Today.jpg" alt=""></div>
+                <div class="home-recents-image"><img ng-src={{item.image}} alt=""></div>
             </div>
         </div>
-        <div ng-show="homeTab[1]" class="home-recents-container"></div>
+
+        <div ng-show="homeTab[1]" class="home-recents-container">
+            <iframe src="https://www.youtube.com/embed/KVZ-P-ZI6W4" frameborder="0" allowfullscreen></iframe>
+        </div>
     </div>
+
+
+
     <div class="home-links">
         <div class="home-section-title">Links</div>
+        <div>
+            <a href="http://www.hackreactor.com/employers">
+                <img src="https://static1.squarespace.com/static/ta/522a22cbe4b04681b0bff826/2345/assets/img/hack-reactor-logo.png" alt="Hack Reactor">
+            </a>
+        </div>
     </div>
 </section>
