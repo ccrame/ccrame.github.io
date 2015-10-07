@@ -213,13 +213,13 @@ header{
   text-align: left;
   z-index: 10;
   background: #222;
-  padding: 7px 0 0 5px;
-  height: 43px;
-  width: 440px;
+  padding: 4px 0 0 2px;
+  height: 46px;
+  width: 445px;
   line-height: 50px;
   top: 0;
-  right: -450px;
-  transition: right .5s;
+  right: -455px;
+  transition: right .6s;
 }
 
 .contact-container-overlay{
