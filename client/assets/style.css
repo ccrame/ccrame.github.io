@@ -637,6 +637,10 @@ footer{
     height: 50px;
   }
 
+  .fa, .fa:hover{
+    color: black;
+  }
+
   .site-logo{
     position: relative;
     top: 0;
