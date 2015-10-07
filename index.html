@@ -32,12 +32,12 @@
          --><div class="nav-item" ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">    About    <div class="nav-hover"></div></div>
 
             <!-- Contact panel -->
-            <div class="contact-panel-toggle pointer" ng-click="toggleVisibility()">Contact</div>
+            <div class="contact-container-overlay" ng-class="{visible:visible}" ng-click="toggleVisibility()"></div>
 
-            <div class="close-contact-container" ng-class="{visible:visible}" ng-click="toggleVisibility()"></div>
+            <div class="contact-toggle pointer" ng-class="{visible:visible}" ng-click="toggleVisibility()" ng-bind="contactMessage"></div>
 
+            <div class="contact-container-close-tab pointer highlight white" ng-class="{visible:visible}" ng-click="toggleVisibility()"><i class="fa fa-chevron-right fa-2x"></i></div>
             <div class="contact-container" ng-class="{visible:visible}">
-                <div class="pointer highlight white" ng-click="toggleVisibility()">Close</div>
                 <div class="contact-icon">
                     <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x"></i></a> 
                 </div>

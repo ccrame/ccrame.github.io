@@ -50,6 +50,7 @@ var app = angular.module('main',[require('angular-ui-router')])
 //CONTROLLER
 .controller('mainController',['$scope','$state','$location','appFactory',function($scope, $state, $location, appFactory){
   $scope.show = false;
+  $scope.contactMessage = "Contact";
 
   $scope.openMobileNav = function(){
     $scope.show = !$scope.show;
@@ -65,6 +66,8 @@ var app = angular.module('main',[require('angular-ui-router')])
 
   $scope.toggleVisibility = function(){
     $scope.visible = !$scope.visible;
+    if($scope.visible) {$scope.contactMessage = "Close";}
+    else {$scope.contactMessage = "Contact";}
   };
 
   $scope.selected = [0,0,0,0];
