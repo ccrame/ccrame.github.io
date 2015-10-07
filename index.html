@@ -12,40 +12,53 @@
 
 
 <body ng-app="main" ng-controller="mainController">
+
+    <!-- Navigation bar for mobile only (width<=700px)-->
     <nav ng-click="openMobileNav()" ng-class="{'show':show}" class="nav-mobile-menu">
-        <div ng-class="{selected: selected[0]}" ng-click="redirect('home',0)" class="nav-mobile-item">Home</div><!--
-     --><div ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)" class="nav-mobile-item">Blog</div><!--
-     --><div ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)" class="nav-mobile-item">Projects</div><!--
-     --><div ng-class="{selected: selected[3]}" ng-click="redirect('about',3)" class="nav-mobile-item">About</div>
+        <div class="nav-mobile-item" ng-class="{selected: selected[0]}" ng-click="redirect('home',0)">     Home     </div><!--
+     --><div class="nav-mobile-item" ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)">     Blog     </div><!--
+     --><div class="nav-mobile-item" ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)"> Projects </div><!--
+     --><div class="nav-mobile-item" ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">    About    </div>
     </nav>
+
     <header>
+        <!-- Navigation bar when width > 700px -->
         <nav class="nav-bar">
             <nav ng-click="openMobileNav()" class="hamburger fa fa-bars fa-2x"></nav>
             <div class="site-logo" ng-click="redirect('home',0)"><img src="client/assets/logo.png" alt="home"><div class="site-title">Charles Crame</div></div>
-            <div ng-class="{selected: selected[0]}" ng-click="redirect('home',0)" class="nav-item">Home<div class="nav-hover"></div></div><!--
-         --><div ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)" class="nav-item">Blog<div class="nav-hover"></div></div><!--
-         --><div ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)" class="nav-item">Projects<div class="nav-hover"></div></div><!--
-         --><div ng-class="{selected: selected[3]}" ng-click="redirect('about',3)" class="nav-item">About<div class="nav-hover"></div></div>
-        </nav>
+            <div class="nav-item" ng-class="{selected: selected[0]}" ng-click="redirect('home',0)">     Home     <div class="nav-hover"></div></div><!--
+         --><div class="nav-item" ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)">     Blog     <div class="nav-hover"></div></div><!--
+         --><div class="nav-item" ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)"> Projects <div class="nav-hover"></div></div><!--
+         --><div class="nav-item" ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">    About    <div class="nav-hover"></div></div>
 
+            <!-- Contact panel -->
+            <div class="contact-panel-toggle pointer" ng-click="toggleVisibility()">Contact</div>
 
-        <div class="contact-info" ng-class="{visible:visible}"> 
-            <div class="contact-container">
-                <span class="button" ng-click="toggleVisibility()">Contact</span>
-                <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x fa-inverse"></i></a> 
-                <a href="https://twitter.com/cpcrame"><i class="fa fa-twitter fa-2x fa-inverse"></i></a>
-                <a href="https://github.com/ccrame"><i class="fa fa-github fa-2x fa-inverse"></i></a>
+            <div class="close-contact-container" ng-class="{visible:visible}" ng-click="toggleVisibility()"></div>
+
+            <div class="contact-container" ng-class="{visible:visible}">
+                <div class="pointer highlight white" ng-click="toggleVisibility()">Close</div>
+                <div class="contact-icon">
+                    <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x"></i></a> 
+                </div>
+                <div class="contact-icon">
+                    <a href="https://twitter.com/cpcrame"><i class="fa fa-twitter fa-2x"></i></a>
+                </div>
+                <div class="contact-icon">
+                    <a href="https://github.com/ccrame"><i class="fa fa-github fa-2x"></i></a>
+                </div>
             </div>
-        </div>
 
-        <div class="header-background">
-            <img src="client/assets/collage.jpg" alt="space" ng-class="{home:selected[0],blog:selected[1],projects:selected[2],about:selected[3]}">
-        </div>
+        </nav>
     </header>
+    <!-- Site Banner -->
+    <div class="header-background">
+        <img src="client/assets/collage1.jpg" alt="space" ng-class="{home:selected[0],blog:selected[1],projects:selected[2],about:selected[3]}">
+    </div>
 
-
-    <div ui-view class="container"></div>
-
+    <section class="outer-margin">
+        <div ui-view class="container"></div>
+    </section>
 
     <footer>
         <div class="footer-padding"></div>

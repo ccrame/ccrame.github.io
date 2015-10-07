@@ -9,29 +9,27 @@ body,p,h1,h2,h3,table,div,section,nav,header{
 }
 
 body{
-  text-align: center;
   font-family: 'Open Sans', sans-serif;
-  max-width: 1500px;
 }  
 
-html,body{
+::-webkit-scrollbar{
+  display: none;
+}  
+
+html{
   max-width: 100%;
   overflow-x: hidden;
   text-align: center;
 }
 
-::-webkit-scrollbar{
-  display: none;
-}
-
 a{
   text-decoration: none;
-  color: white;
+  color: black;
 }
 
 pre{
-  overflow: auto;
   background: black;
+  padding: 10px;
 }
 
 code{
@@ -48,6 +46,14 @@ iframe{
   cursor: pointer;
 }
 
+.highlight:hover{
+  color: #ee7311;
+}
+
+.white{
+  color: white;
+}
+
 /*COLORS
 
   Orange - #ee7311
@@ -60,32 +66,41 @@ iframe{
 
 *****************************************************/
 header{
-  background: none;
-  height: 250px;
+  width: 100%;
+  max-width: 1066px;
+  margin: auto;
 }
 
 
 /***********************
   Site Title
 ************************/
-.button{
-  position: relative;
-  top:-5px;
-  border-radius: 5px;
-  background: #555;
-  color: white;
-  padding: 5px;
-  margin-right: 20px;
+.site-logo{
+  position: absolute;
+  float: left;
+}
+
+.site-logo img{
+  left: 0;
+  width: 200px;
+  height: 50px;
   cursor: pointer;
+  max-width: 50px;
 }
 
-.button:hover{
-  background: white;
+.site-title{
+  position: absolute;
+  font-size: 1.3em;
+  display: inline-block;
+  width: 150px;
+  height: 50px;
+  line-height: 50px;
+}
+
+
+.site-logo img, .site-logo img:hover, .site-logo:hover >*{
   color: black;
-}
-
-.fa{
-  margin: 0 10px;
+  background: white;
 }
 
 
@@ -102,6 +117,10 @@ header{
   height: 50px;
   overflow: hidden;
   background: white;
+}
+
+.nav-bar {
+  position: relative;
 }
 
 .nav-hover{
@@ -148,54 +167,54 @@ header{
   top: -10px;
 }
 
-.site-logo{
-  position: absolute;
-  text-align: left;
-  left: 0;
-  width: 200px;
-  height: 50px;
-  cursor: pointer;
-}
 
-.site-title{
-  font-size: 1.3em;
-  display: inline-block;
-  position: absolute;
-  width: 150px;
-  height: 50px;
-  line-height: 50px;
-}
-
-.site-logo img{
-  max-width: 50px;
-}
-
-.site-logo img, .site-logo img:hover, .site-logo:hover >*{
-  color: black;
-  background: white;
-}
 
 /***********************
   Contact Info Panel
 ************************/
-.contact-info{
+.fa{
+  margin: 0 10px;
+  color: white;
+}
+
+.fa:hover{
+  color: #ee7311;
+}
+
+.contact-panel-toggle{
   position: absolute;
-  right: -170px;
-  vertical-align: top;
-  padding-right: 20px;
-  text-align: right;
-  line-height: 60px;
-  text-decoration: none;
-  min-height: 50px;
-  transition: right 1s;
+  right: 15px;
+  top: 15px;
+}
+
+.contact-panel-toggle:hover{
+  color: #ee7311;
 }
 
 .contact-container{
-  display: block;
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  width: 200px;
+  background: #222;
+  padding:100px;
+  top: 0;
+  right: -400px;
+  transition: right .5s;
+}
+
+.close-contact-container{
+  z-index: 5;
+  position: fixed;
+  display: none;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .visible{
   right: 0;
+  display: block;
 }
 
 
@@ -204,13 +223,13 @@ header{
 ******************/
 .header-background{
   z-index: -1;
-  position: absolute;
   top: 50px;
   margin: auto;
   height: 200px;
   border-radius: 2px;
   overflow: hidden;
   width: 100%;
+  background: #282e28;
 }
 
 .header-background img{
@@ -219,9 +238,9 @@ header{
 }
 
 .home{ top: 0px; }
-.blog{ top: -375px;}
-.projects{ top: -750px; }
-.about{ top: -1125px; }
+.blog{ top: -200px;}
+.projects{ top: -400px; }
+.about{ top: -600px; }
 
 
 
@@ -243,11 +262,15 @@ header{
   overflow-x: hidden;
   text-align: left;
   display: inline-block;
-  left: 1%;
-  width: 98%;
-  max-width: 1200px;
-  margin: 10px 0;
+  background: white;
+  width: 100%;
+  max-width: 1066px;
   min-height: 500px;
+  vertical-align: top;
+}
+
+.outer-margin{
+  background: #f8f8f8;
 }
 
 
@@ -304,10 +327,12 @@ header{
   width: 25%;
 }
 
-.home-links div a{
+.home-link-item{
   color: black;
+  height: 50px;
 }
-.home-links div img{
+
+.home-link-item a img{
   width: 100px;
   height: auto;
 }
@@ -475,7 +500,6 @@ p.home-recents-title{
 .project-description{
   margin: auto;
   margin-bottom: 70px;
-  background: #eee;
   width: 700px;
 }
 
@@ -530,6 +554,7 @@ footer{
   display: block;
   min-height: 200px;
   background: #282e28;
+  vertical-align: top;
 }
 
 .footer-padding{
@@ -571,6 +596,7 @@ footer{
 }
 
 @media (max-width: 700px){
+  
   header{
     height: 50px;
   }
@@ -585,6 +611,10 @@ footer{
     height: 159px;
   }
 
+  pre{
+    padding: 0;
+  }
+
   .container{
     width: 100%;
     margin:0;
@@ -597,6 +627,7 @@ footer{
 
   .nav-bar{
     text-align: right;
+    min-width: 300px;
   }
 
   .hamburger{
@@ -611,7 +642,6 @@ footer{
     top: 0;
     left: 10px;
   }
-
 
 
   /* Home related styling */
@@ -685,7 +715,7 @@ footer{
   }
 
   .project-description{
-    width: 100%;
+    width: 90%;
   }
 
   .project-nav-item{
@@ -694,7 +724,7 @@ footer{
   
   /* Hide these elements in mobile mode */
   .nav-item{ display: none; }
-  .contact-container{ display: none;}
+  .contact-container, .contact-panel-toggle{ display: none;}
   .home-links{display: none; }
   .header-background{ display: none;}
 }
