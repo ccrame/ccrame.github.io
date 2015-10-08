@@ -5,13 +5,13 @@
         <article class="article-content" ng-include="articleData.url"></article>
     </div>
 
-    <div class="loader" ><i class="fa fa-gear fa-spin fa-4x black"></i></div>
+    <div class="loader" ng-if="articleData === null && comments !== null "><i class="fa fa-gear fa-spin fa-4x black"></i></div>
 
-    <div class="article-comments-container" ng-if="comments !== null">
+    <div class="article-comment-container" ng-if="comments !== null">
         <div class="article-comment-input">
             <form>
-                <textarea name="" id="comment-form"  style="resize:none;"></textarea>
-                <input class="article-comment-submit"type="submit" ng-click="postComment()">
+                <textarea id="comment-form" ng-if="0" style="resize:none;"></textarea><br>
+                <input type="submit" class="article-comment-submit highlight" ng-click="postComment()" value="Post Comment">
             </form>
         </div>
         <div class="article-comment" ng-repeat="comment in comments"></div>

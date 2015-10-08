@@ -38,14 +38,6 @@ iframe{
   width: 700px;
 }
 
-
-
-/*COLORS
-
-  Orange - #ee7311
-
-*/
-
 /*****************************************************
 
     HEADER SECTION
@@ -480,7 +472,8 @@ p.home-recents-title{
 
 /* Article Comments */
 .article-comment-container{
-  display: block;
+  margin: 40px 0;
+  display: none;
 }
 
 #comment-form{
@@ -493,7 +486,10 @@ p.home-recents-title{
 }
 
 .article-comment-submit{
-  line-height: 30px;
+  width: 150px;
+  font-size: 18px;
+  background: white;
+  color: black;
 }
 
 
@@ -503,7 +499,7 @@ p.home-recents-title{
 *****************/
 .project-container{
   display: block;
-  min-height: 500px;
+  min-height: 800px;
   background: #ee7311;
   background: none;
   width: 100%;
@@ -667,6 +663,7 @@ footer{
   .nav-bar{
     text-align: right;
     min-width: 300px;
+    border-bottom: 1px solid black;
   }
 
   .hamburger{
