@@ -1,12 +1,24 @@
 <section>
     <div ng-if="articleData !== null" class="article-content-container">
-        <div class="title" ng-bind="articleData.title"></div>
+        <div class="article-page-title" ng-bind="articleData.title"></div>
         <div class="article-date" ng-bind="articleData.date"></div>
         <article class="article-content" ng-include="articleData.url"></article>
     </div>
 
+    <div class="loader" ><i class="fa fa-gear fa-spin fa-4x black"></i></div>
+
+    <div class="article-comments-container" ng-if="comments !== null">
+        <div class="article-comment-input">
+            <form>
+                <textarea name="" id="comment-form"  style="resize:none;"></textarea>
+                <input class="article-comment-submit"type="submit" ng-click="postComment()">
+            </form>
+        </div>
+        <div class="article-comment" ng-repeat="comment in comments"></div>
+    </div>
+
     <div class="article-list-container">
-        <div class="title" ng-bind="articleMessage"></div>
+        <div class="article-page-title" ng-bind="articleMessage"></div>
         <div class="article-list-content" ng-repeat="article in articles | orderBy: 'date':true">
             <div class="article-title" ng-click="redirect('article',1,{article:article.key})" ng-bind="article.title"></div>
             <div class="article-description" ng-bind="article.description"></div>

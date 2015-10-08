@@ -12,10 +12,6 @@ body{
   font-family: 'Open Sans', sans-serif;
 }  
 
-::-webkit-scrollbar{
-  display: none;
-}  
-
 html{
   max-width: 100%;
   overflow-x: hidden;
@@ -42,17 +38,7 @@ iframe{
   width: 700px;
 }
 
-.pointer{
-  cursor: pointer;
-}
 
-.highlight:hover{
-  color: #ee7311;
-}
-
-.white{
-  color: white;
-}
 
 /*COLORS
 
@@ -206,6 +192,10 @@ header{
   top: 0;
   right: -400px;
   transition: right .5s;
+}
+
+.contact-icon{
+  padding: 10px 0;
 }
 
 .contact-container-close-tab{
@@ -437,6 +427,14 @@ p.home-recents-title{
 /****************
   Blog Styling
 *****************/
+.article-title{
+  color: red;
+  font-size: 1.2em;
+  transition: color .25s;
+}
+
+
+/* Article Content*/
 .article-content-container{
   display: inline-block;
   text-align: center;
@@ -450,6 +448,8 @@ p.home-recents-title{
   text-align: left;
 }
 
+
+/* Article List */
 .article-list-container{
   display: block;
   width: 70%;
@@ -459,12 +459,6 @@ p.home-recents-title{
 .article-list-content{
   text-align: center;
   margin: 20px;
-}
-
-.article-title{
-  color: red;
-  font-size: 1.2em;
-  transition: color .25s;
 }
 
 .article-title:hover{
@@ -477,11 +471,32 @@ p.home-recents-title{
   font-size: .8em;
 }
 
-.title{
+.article-page-title{
   font-family: 'Raleway', sans-serif;
   font-size: 2em;
   text-align: center;
 }
+
+
+/* Article Comments */
+.article-comment-container{
+  display: block;
+}
+
+#comment-form{
+  width: 60%;
+  height: 70px;
+}
+
+.article-comment-input{
+  text-align: center;
+}
+
+.article-comment-submit{
+  line-height: 30px;
+}
+
+
 
 /****************
   Project
@@ -616,7 +631,11 @@ footer{
 }
 
 @media (max-width: 700px){
-  
+
+  ::-webkit-scrollbar{
+    display: none;
+  }  
+
   header{
     height: 50px;
   }
@@ -748,7 +767,34 @@ footer{
   
   /* Hide these elements in mobile mode */
   .nav-item{ display: none; }
-  .contact-container, .contact-panel-toggle{ display: none;}
+  .contact-container, .contact-toggle{ display: none;}
   .home-links{display: none; }
   .header-background{ display: none;}
+}
+
+
+
+/****************************************************
+
+      GLOBAL CLASSES
+
+*****************************************************/
+.pointer{
+  cursor: pointer;
+}
+
+.highlight:hover{
+  color: #ee7311;
+}
+
+.white{
+  color: white;
+}
+
+.black{
+  color: black;
+}
+
+.loader{
+  text-align: center;
 }
