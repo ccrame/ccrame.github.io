@@ -25,7 +25,8 @@ a{
 
 pre{
   background: black;
-  padding: 10px;
+  padding: 30px;
+  overflow-x:auto; 
 }
 
 code{
@@ -135,16 +136,10 @@ header{
   color: #ee7311;
 }
 
-.selected > *{
+.selected > *, .selected:hover > *{
   background: #ee7311;
-  top: -10px;
+  top: -7px;
 }
-
-.selected:hover >*{
-  background: #ee7311;
-  top: -10px;
-}
-
 
 
 /***********************
@@ -453,11 +448,6 @@ p.home-recents-title{
   margin: 20px;
 }
 
-.article-title:hover{
-  color: lightblue;
-  cursor: pointer;
-}
-
 .article-description, .article-date{
   font-style: italic;
   font-size: .8em;
@@ -647,7 +637,7 @@ footer{
   }
 
   pre{
-    padding: 0;
+    padding: 10px 25px 10px 10px;
   }
 
   .container{
@@ -792,6 +782,6 @@ footer{
   color: black;
 }
 
-.loader{
+.center{
   text-align: center;
 }

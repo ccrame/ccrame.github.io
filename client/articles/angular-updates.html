@@ -2,15 +2,15 @@
 <p>$apply<br>While both methods are simple, this is the simpler of the two. This provides a quick way to use a callback to force the scope to update along with your changes. Here is a simple example using Firebase listeners.</p>
 <pre><code>
 
-var ref = new Firebase('https://data.firebaseio.com');
-var data = ref.child("data");
-$scope.array = [];
+  var ref = new Firebase('https://data.firebaseio.com');
+  var data = ref.child("data");
+  $scope.array = [];
 
-data.on("child_added",function(info){
-  $scope.$apply(function(){
-    $scope.array.push(info.val());
+  data.on("child_added",function(info){
+    $scope.$apply(function(){
+      $scope.array.push(info.val());
+    });
   });
-});
 
 </code></pre>
 
@@ -55,6 +55,7 @@ data.on("child_added",function(info){
 <p>Now it is much simpler to re-use this code within any controller.</p>
 <p>$watch<br>This is another way to update the scope when it refuses to do so. The $watch method takes two arguments, both callback functions. The first callback requires a return statement and it is the change in this statement that triggers the second callback function.</p>
 <pre><code>
+
   $scope.messages= [];
   $scope.lastMessage = '';
 
@@ -63,6 +64,7 @@ data.on("child_added",function(info){
   }, function(newVal,oldVal){
     $scope.lastMessage = $scope.messages[$scope.messages.length - 1];
   });
+
 </code></pre>
 
 <p>As you can see, the second callback takes two arguments.  The first argument is the new value returned by the previous callback function.  The second argument is the old value, or the original value of the previous callback function to which the new value is compared. When these two values are difference from each other, the second callback function is triggered. In the example above, neither value from the second callback function is used. However, it is still triggered due to the difference in the two values. </p>

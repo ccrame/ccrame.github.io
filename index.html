@@ -4,9 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charles Crame</title>
     <script src="client/app.bundle.js"></script>
+    <link rel="icon" href="client/assets/logo.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="client/assets/style.css">
-    <link rel="icon" href="client/assets/logo.png">
+    <!--script src="client/lib/oauth-js/dist/oauth.min.js"></script-->
 </head>
 
 
@@ -51,12 +52,20 @@
 
         </nav>
     </header>
+
     <!-- Site Banner -->
     <div class="header-background">
         <img src="client/assets/collage1.jpg" alt="space" ng-class="{home:selected[0],blog:selected[1],projects:selected[2],about:selected[3]}">
     </div>
 
+    <!-- Authentication -->
     <section class="outer-margin">
+        <div>
+            <i ng-click="" class="fa fa-twitter black"></i>
+            <i ng-click="" class="fa fa-facebook black"></i>
+            <i ng-click="" class="fa fa-google black"></i>
+            <i ng-click="" class="fa fa-eye black"></i>
+        </div>
         <div ui-view class="container"></div>
     </section>
 

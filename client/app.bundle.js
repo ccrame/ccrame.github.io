@@ -50,9 +50,19 @@ var app = angular.module('main',[require('angular-ui-router')])
 
 //CONTROLLER
 .controller('mainController',['$scope','$state','$location','appFactory',function($scope, $state, $location, appFactory){
+
+  // OAuth.initialize('mLzdeuffodwWIehTFLH-g_8DmxI');
+
   $scope.show = false;
   $scope.contactMessage = "Contact";
+  $scope.visible = false;
+  $scope.selected = [0,0,0,0];
+  // window.console.log('oauth is ', OAuth);
 
+  /********************
+    Navigation Bar 
+  *********************/
+  // Open navigation menu on mobile version
   $scope.openMobileNav = function(){
     $scope.show = !$scope.show;
   };
@@ -62,16 +72,6 @@ var app = angular.module('main',[require('angular-ui-router')])
     $scope.selected[num] = 1;
     $state.go(loc,stateParams);
   };
-
-  $scope.visible = false;
-
-  $scope.toggleVisibility = function(){
-    $scope.visible = !$scope.visible;
-    if($scope.visible) {$scope.contactMessage = "Close";}
-    else {$scope.contactMessage = "Contact";}
-  };
-
-  $scope.selected = [0,0,0,0];
 
   var init = function(){
     $scope.selected = [0,0,0,0];
@@ -85,11 +85,66 @@ var app = angular.module('main',[require('angular-ui-router')])
     };//end of switch
   };
 
+  // re-initialize when a state becomes present
   $scope.$watch(function(){return $state.current.name;},function(){
     init();
   });
 
+  // initialize page on load
   init();
+
+
+  /********************
+    Contacts Side Panel
+  *********************/
+  $scope.toggleVisibility = function(){
+    $scope.visible = !$scope.visible;
+    if($scope.visible) {$scope.contactMessage = "Close";}
+    else {$scope.contactMessage = "Contact";}
+  };
+
+
+  /********************
+    Authentication
+  *********************/
+  // $scope.signin = function(provider){
+  //   OAuth.popup(provider, {cache: true})
+  //     .then(function(res){
+  //       res.email = provider + res.id + '@site.com';
+  //       return User.signin(res);
+  //     })
+  //     .done(function(user){
+  //       console.log('user is ', user);
+  //       console.log('login success');
+  //     })
+  //     .fail(function(err){
+  //       console.log(err);
+  //       console.log('signup user');
+  //     })
+  // };
+
+  // $scope.unauth = function(){
+  //   OAuth.clearCache();
+  //   User.getIdentity().logout(function(){
+  //     console.log('user logged out');
+  //   })
+  // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }]);
 },{"./app/about/about.js":2,"./app/blog/blog.js":3,"./app/home/home.js":4,"./app/projects/projects.js":5,"./factory.js":6,"angular":9,"angular-ui-router":7}],2:[function(require,module,exports){
 module.exports = function($scope,appFactory){
@@ -207,14 +262,12 @@ module.exports = function(){
     }
   };
 
-
   obj._2 = "kwwsv=22surmwhvwlqj1iluhedvhlr1frp";
   obj._1 = function(a){
     return a.replace(/./g,function(a){return String.fromCharCode(a.charCodeAt(0)-3);});
   };
 
   obj.firebase = new Firebase(obj._1(obj._2));
-  // obj.firebase = new Firebase('https://projtesting.firebaseio.com');
 
   return obj;
 };
