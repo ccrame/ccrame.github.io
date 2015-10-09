@@ -1,30 +1,33 @@
 <section class="project-container">
-    <div class="project-title">Projects</div>
+    <div class="project-page-title">Projects</div>
     <div class="project-nav">
-        <div class="project-nav-item pointer" ng-class="{'selected-project':selected[0]}" ng-click="selectProject(0)">Linelevel<div class="hover-element"></div></div>
-        <div class="project-nav-item pointer" ng-class="{'selected-project':selected[1]}" ng-click="selectProject(1)">Political Profiler<div class="hover-element"></div></div>
-        <div class="project-nav-item pointer" ng-class="{'selected-project':selected[2]}" ng-click="selectProject(2)">Challenge Accepted!<div class="hover-element"></div></div>
+        <div class="project-title">
+            <div class="project-title-arrows">
+                <i class="fa fa-angle-left fa-2x black highlight pointer" ng-if="selected!==0" ng-click="go('left')"></i>
+            </div>
+            <a ng-href={{projectLinks[selected]}} ng-bind="projects[selected]"></a>
+            <div class="project-title-arrows">
+                <i class="fa fa-angle-right fa-2x black highlight pointer" ng-if="selected!==projects.length-1" ng-click="go('right')"></i>
+            </div>
+        </div>
     </div>
 
-    <div ng-if="selected[0]">
+    <div ng-if="selected === 0">
         <div class="project-description"> 
-            <a href="http://linelevel.herokuapp.com"> Linelevel </a> 
             <p>A social media app where artists can stream videos to their fans</p>
         </div>
         <img src="./client/assets/linelevel.png" alt="Linelevel">
     </div>
 
-    <div ng-if="selected[1]">
+    <div ng-if="selected === 1">
         <div class="project-description">
-            <a href="https://politicalprofiler.herokuapp.com"> Political Profiler</a>
             <p>A site that allows users to compare politicians' voting histories</p>
         </div>
         <img src="./client/assets/politicalprofiler.png" alt="Political Profiler">
     </div>
 
-    <div ng-if="selected[2]">
+    <div ng-if="selected === 2">
         <div class="project-description"> 
-            <a href="https://heraapphrr7.herokuapp.com/#!/"> Challenge Accepted </a>
             <p>A web app where users can manage their daily tasks and share collections of tasks</p>
         </div>
         <img src="./client/assets/challengeaccepted.png" alt="Challenge Accepted!">

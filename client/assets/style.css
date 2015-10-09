@@ -505,7 +505,7 @@ p.home-recents-title{
   font-size: 1.5em;
 }
 
-.project-title{
+.project-page-title{
   font-family: 'Raleway', sans-serif;
   font-size: 2em;
   margin: 20px auto;
@@ -516,6 +516,24 @@ p.home-recents-title{
   margin: auto;
   width: 700px;
   height: auto;
+}
+
+.project-title{
+  margin: 20px 0;
+}
+
+.project-title-arrows{
+  display: inline-block;
+  min-width: 30px;
+  min-height: 1px;
+}
+
+.project-title a{
+  display: inline-block;
+  min-width: 240px;
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.5em;
+  color: red;
 }
 
 .project-description{
@@ -601,7 +619,7 @@ footer{
   z-index: 5;
   padding-top: 15%;
   top: -9999px;
-  transition: top .5s;
+  transition: top .1s;
   background: rgba(0,0,0,.9);
 }
 
@@ -784,4 +802,8 @@ footer{
 
 .center{
   text-align: center;
+}
+
+.clear{
+  color: transparent;
 }

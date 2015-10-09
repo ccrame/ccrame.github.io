@@ -7,8 +7,7 @@
         </div>
 
         <div ng-show="homeTab[0]" class="home-recents-container" ng-repeat="item in recents | orderBy: 'date':true">
-            <div class="article-info">+</div><!--
-         --><div class="home-recents-content">
+            <div class="home-recents-content">
                 <div class="home-recents-description">
                     <p class="home-recents-title">{{ item.title }}</p>
                     <p ng-bind="item.description"></p>
