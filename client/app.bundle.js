@@ -5,10 +5,15 @@ homeController     = require('./app/home/home.js'),
 projectsController = require('./app/projects/projects.js'),
 aboutController    = require('./app/about/about.js');
 
-var app = angular.module('main',[require('angular-ui-router')])
+
+
+
+var AUTH0 = require('./app/auth0/auth0-variables.js');
+
+var app = angular.module('main',['auth0',require('angular-ui-router'),require('angular-jwt'),require('angular-storage')])
 
 //CONFIG
-.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+.config(['$stateProvider','$urlRouterProvider','authProvider', 'jwtInterceptorProvider',function($stateProvider,$urlRouterProvider, authProvider, jwtInterceptorProvider){
   $urlRouterProvider.otherwise('/home');
 
   $stateProvider
@@ -37,19 +42,41 @@ var app = angular.module('main',[require('angular-ui-router')])
       templateUrl: 'client/app/blog/blog.html',
       controller: blogController
     });
+
+    authProvider.init({
+      domain: AUTH0_DOMAIN,
+      clientID: AUTH0_CLIENT_ID
+    });
+    
+    jwtInterceptorProvider.tokenGetter = function(store) {
+      return store.get('token');
+    };
 }])
 
 
 //RUN
-.run(['$state',function($state){
+.run(['$state', 'auth', 'store', 'jwtHelper','appFactory',function($state, auth, store, jwtHelper, appFactory){
   $state.transitionTo('home');
+
+  if (!auth.isAuthenticated) {
+      var token = store.get('token');
+      if (token) {
+        if (!jwtHelper.isTokenExpired(token)) {
+          auth.authenticate(store.get('profile'), token);
+          appFactory.profile = store.get('profile');
+        } else {
+          store.remove('token');
+          store.remove('profile');
+        }
+      }
+    }
 }])
 
 //FACTORY
 .factory('appFactory',require('./factory.js'))
 
 //CONTROLLER
-.controller('mainController',['$scope','$state','$location','appFactory',function($scope, $state, $location, appFactory){
+.controller('mainController',['$scope','$state','$location','appFactory','auth','store',function($scope, $state, $location, appFactory, auth, store){
 
   // OAuth.initialize('mLzdeuffodwWIehTFLH-g_8DmxI');
 
@@ -107,50 +134,39 @@ var app = angular.module('main',[require('angular-ui-router')])
   /********************
     Authentication
   *********************/
-  // $scope.signin = function(provider){
-  //   OAuth.popup(provider, {cache: true})
-  //     .then(function(res){
-  //       res.email = provider + res.id + '@site.com';
-  //       return User.signin(res);
-  //     })
-  //     .done(function(user){
-  //       console.log('user is ', user);
-  //       console.log('login success');
-  //     })
-  //     .fail(function(err){
-  //       console.log(err);
-  //       console.log('signup user');
-  //     })
-  // };
+  window.test = function(){
+    console.log('profile: ',appFactory.profile);
+    console.log('authenticated: ', auth.isAuthenticated);
+  };
 
-  // $scope.unauth = function(){
-  //   OAuth.clearCache();
-  //   User.getIdentity().logout(function(){
-  //     console.log('user logged out');
-  //   })
-  // };
+  $scope.login = function() {
+    auth.signin({}, function(profile, token) {
+      console.log('profile is ',profile);
+      store.set('profile', profile);
+      store.set('token', token);
+    }, function(error) {
+      console.log("There was an error logging in", error);
+    });
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  $scope.logout = function() {
+    appFactory.profile = null;
+    auth.signout();
+    store.remove('profile');
+    store.remove('token');
+  }
 
 
 }]);
-},{"./app/about/about.js":2,"./app/blog/blog.js":3,"./app/home/home.js":4,"./app/projects/projects.js":5,"./factory.js":6,"angular":9,"angular-ui-router":7}],2:[function(require,module,exports){
+},{"./app/about/about.js":2,"./app/auth0/auth0-variables.js":3,"./app/blog/blog.js":4,"./app/home/home.js":5,"./app/projects/projects.js":6,"./factory.js":7,"angular":14,"angular-jwt":9,"angular-storage":11,"angular-ui-router":12}],2:[function(require,module,exports){
 module.exports = function($scope,appFactory){
 
 };
 },{}],3:[function(require,module,exports){
+AUTH0_CLIENT_ID = '2BGFav69I7MyFUW8gzn8p69HWIszklnN'; 
+AUTH0_DOMAIN = 'willowcorp.auth0.com'; 
+AUTH0_CALLBACK_URL = location.href;
+},{}],4:[function(require,module,exports){
 module.exports = function($scope, appFactory, $state, $stateParams){
   var articlesRef = appFactory.firebase.child('articles');
   var commentRef = appFactory.firebase.child('comments');
@@ -204,7 +220,7 @@ module.exports = function($scope, appFactory, $state, $stateParams){
     window.console.log('hello');
   };
 };
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function($scope, appFactory, $state, $stateParams){
 
   $scope.recents = [];
@@ -237,7 +253,7 @@ module.exports = function($scope, appFactory, $state, $stateParams){
   })();
 
 };
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function($scope,appFactory,$state){
   $scope.selected = 0;
   $scope.projects = ['Linelevel','Political Profiler','Challenge Accepted!'];
@@ -251,7 +267,7 @@ module.exports = function($scope,appFactory,$state){
     }
   };
 };
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var Firebase = require('client-firebase');
 module.exports = function(){
   var obj = {};
@@ -267,6 +283,8 @@ module.exports = function(){
     }
   };
 
+  obj.profile = null;
+
   obj._2 = "kwwsv=22surmwhvwlqj1iluhedvhlr1frp";
   obj._1 = function(a){
     return a.replace(/./g,function(a){return String.fromCharCode(a.charCodeAt(0)-3);});
@@ -276,7 +294,338 @@ module.exports = function(){
 
   return obj;
 };
-},{"client-firebase":10}],7:[function(require,module,exports){
+},{"client-firebase":15}],8:[function(require,module,exports){
+(function() {
+
+
+// Create all modules and define dependencies to make sure they exist
+// and are loaded in the correct order to satisfy dependency injection
+// before all nested files are concatenated by Grunt
+
+// Modules
+angular.module('angular-jwt',
+    [
+        'angular-jwt.interceptor',
+        'angular-jwt.jwt'
+    ]);
+
+ angular.module('angular-jwt.interceptor', [])
+  .provider('jwtInterceptor', function() {
+
+    this.urlParam = null;
+    this.authHeader = 'Authorization';
+    this.authPrefix = 'Bearer ';
+    this.tokenGetter = function() {
+      return null;
+    }
+
+    var config = this;
+
+    this.$get = ["$q", "$injector", "$rootScope", function ($q, $injector, $rootScope) {
+      return {
+        request: function (request) {
+          if (request.skipAuthorization) {
+            return request;
+          }
+
+          if (config.urlParam) {
+            request.params = request.params || {};
+            // Already has the token in the url itself
+            if (request.params[config.urlParam]) {
+              return request;
+            }
+          } else {
+            request.headers = request.headers || {};
+            // Already has an Authorization header
+            if (request.headers[config.authHeader]) {
+              return request;
+            }
+          }
+
+          var tokenPromise = $q.when($injector.invoke(config.tokenGetter, this, {
+            config: request
+          }));
+
+          return tokenPromise.then(function(token) {
+            if (token) {
+              if (config.urlParam) {
+                request.params[config.urlParam] = token;
+              } else {
+                request.headers[config.authHeader] = config.authPrefix + token;
+              }
+            }
+            return request;
+          });
+        },
+        responseError: function (response) {
+          // handle the case where the user is not authenticated
+          if (response.status === 401) {
+            $rootScope.$broadcast('unauthenticated', response);
+          }
+          return $q.reject(response);
+        }
+      };
+    }];
+  });
+
+ angular.module('angular-jwt.jwt', [])
+  .service('jwtHelper', function() {
+
+    this.urlBase64Decode = function(str) {
+      var output = str.replace(/-/g, '+').replace(/_/g, '/');
+      switch (output.length % 4) {
+        case 0: { break; }
+        case 2: { output += '=='; break; }
+        case 3: { output += '='; break; }
+        default: {
+          throw 'Illegal base64url string!';
+        }
+      }
+      return decodeURIComponent(escape(window.atob(output))); //polifyll https://github.com/davidchambers/Base64.js
+    }
+
+
+    this.decodeToken = function(token) {
+      var parts = token.split('.');
+
+      if (parts.length !== 3) {
+        throw new Error('JWT must have 3 parts');
+      }
+
+      var decoded = this.urlBase64Decode(parts[1]);
+      if (!decoded) {
+        throw new Error('Cannot decode the token');
+      }
+
+      return JSON.parse(decoded);
+    }
+
+    this.getTokenExpirationDate = function(token) {
+      var decoded;
+      decoded = this.decodeToken(token);
+
+      if(typeof decoded.exp === "undefined") {
+        return null;
+      }
+
+      var d = new Date(0); // The 0 here is the key, which sets the date to the epoch
+      d.setUTCSeconds(decoded.exp);
+
+      return d;
+    };
+
+    this.isTokenExpired = function(token, offsetSeconds) {
+      var d = this.getTokenExpirationDate(token);
+      offsetSeconds = offsetSeconds || 0;
+      if (d === null) {
+        return false;
+      }
+
+      // Token expired?
+      return !(d.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
+    };
+  });
+
+}());
+},{}],9:[function(require,module,exports){
+require('./dist/angular-jwt.js');
+module.exports = 'angular-jwt';
+
+
+},{"./dist/angular-jwt.js":8}],10:[function(require,module,exports){
+(function() {
+
+
+// Create all modules and define dependencies to make sure they exist
+// and are loaded in the correct order to satisfy dependency injection
+// before all nested files are concatenated by Grunt
+
+angular.module('angular-storage',
+    [
+      'angular-storage.store'
+    ]);
+
+angular.module('angular-storage.cookieStorage', [])
+  .service('cookieStorage', ["$injector", function ($injector) {
+    var $cookieStore = $injector.get('$cookieStore');
+
+    this.set = function (what, value) {
+      return $cookieStore.put(what, value);
+    };
+
+    this.get = function (what) {
+      return $cookieStore.get(what);
+    };
+
+    this.remove = function (what) {
+      return $cookieStore.remove(what);
+    };
+  }]);
+
+angular.module('angular-storage.internalStore', ['angular-storage.localStorage', 'angular-storage.sessionStorage'])
+  .factory('InternalStore', ["$log", "$injector", function($log, $injector) {
+
+    function InternalStore(namespace, storage, delimiter) {
+      this.namespace = namespace || null;
+      this.delimiter = delimiter || '.';
+      this.inMemoryCache = {};
+      this.storage = $injector.get(storage || 'localStorage');
+    }
+
+    InternalStore.prototype.getNamespacedKey = function(key) {
+      if (!this.namespace) {
+        return key;
+      } else {
+        return [this.namespace, key].join(this.delimiter);
+      }
+    };
+
+    InternalStore.prototype.set = function(name, elem) {
+      this.inMemoryCache[name] = elem;
+      this.storage.set(this.getNamespacedKey(name), JSON.stringify(elem));
+    };
+
+    InternalStore.prototype.get = function(name) {
+      var obj = null;
+      if (name in this.inMemoryCache) {
+        return this.inMemoryCache[name];
+      }
+      var saved = this.storage.get(this.getNamespacedKey(name));
+      try {
+
+        if (typeof saved === 'undefined' || saved === 'undefined') {
+          obj = undefined;
+        } else {
+          obj = JSON.parse(saved);
+        }
+
+        this.inMemoryCache[name] = obj;
+      } catch(e) {
+        $log.error('Error parsing saved value', e);
+        this.remove(name);
+      }
+      return obj;
+    };
+
+    InternalStore.prototype.remove = function(name) {
+      this.inMemoryCache[name] = null;
+      this.storage.remove(this.getNamespacedKey(name));
+    };
+
+    return InternalStore;
+  }]);
+
+
+angular.module('angular-storage.localStorage', ['angular-storage.cookieStorage'])
+  .service('localStorage', ["$window", "$injector", function ($window, $injector) {
+    var localStorageAvailable;
+
+    try {
+      $window.localStorage.setItem('testKey', 'test');
+      $window.localStorage.removeItem('testKey');
+      localStorageAvailable = true;
+    } catch(e) {
+      localStorageAvailable = false;
+    }
+
+    if (localStorageAvailable) {
+      this.set = function (what, value) {
+        return $window.localStorage.setItem(what, value);
+      };
+
+      this.get = function (what) {
+        return $window.localStorage.getItem(what);
+      };
+
+      this.remove = function (what) {
+        return $window.localStorage.removeItem(what);
+      };
+    } else {
+      var cookieStorage = $injector.get('cookieStorage');
+
+      this.set = cookieStorage.set;
+      this.get = cookieStorage.get;
+      this.remove = cookieStorage.remove;
+    }
+  }]);
+
+angular.module('angular-storage.sessionStorage', ['angular-storage.cookieStorage'])
+  .service('sessionStorage', ["$window", "$injector", function ($window, $injector) {
+    var sessionStorageAvailable;
+
+    try {
+      $window.sessionStorage.setItem('testKey', 'test');
+      $window.sessionStorage.removeItem('testKey');
+      sessionStorageAvailable = true;
+    } catch(e) {
+      sessionStorageAvailable = false;
+    }
+
+    if (sessionStorageAvailable) {
+      this.set = function (what, value) {
+        return $window.sessionStorage.setItem(what, value);
+      };
+
+      this.get = function (what) {
+        return $window.sessionStorage.getItem(what);
+      };
+
+      this.remove = function (what) {
+        return $window.sessionStorage.removeItem(what);
+      };
+    } else {
+      var cookieStorage = $injector.get('cookieStorage');
+
+      this.set = cookieStorage.set;
+      this.get = cookieStorage.get;
+      this.remove = cookieStorage.remove;
+    }
+  }]);
+
+angular.module('angular-storage.store', ['angular-storage.internalStore'])
+  .provider('store', function() {
+
+    // the default storage
+    var _storage = 'localStorage';
+
+    /**
+     * Sets the storage.
+     *
+     * @param {String} storage The storage name
+     */
+    this.setStore = function(storage) {
+      if (storage && angular.isString(storage)) {
+        _storage = storage;
+      }
+    };
+
+    this.$get = ["InternalStore", function(InternalStore) {
+      var store = new InternalStore(null, _storage);
+
+      /**
+       * Returns a namespaced store
+       *
+       * @param {String} namespace The namespace
+       * @param {String} storage The name of the storage service
+       * @param {String} key The key
+       * @returns {InternalStore}
+       */
+      store.getNamespacedStore = function(namespace, storage, key) {
+        return new InternalStore(namespace, storage, key);
+      };
+
+      return store;
+    }];
+  });
+
+
+}());
+},{}],11:[function(require,module,exports){
+require('./dist/angular-storage.js');
+module.exports = 'angular-storage';
+
+
+},{"./dist/angular-storage.js":10}],12:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4647,7 +4996,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],8:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33552,11 +33901,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],9:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":8}],10:[function(require,module,exports){
+},{"./angular":13}],15:[function(require,module,exports){
 (function() {var h,aa=this;function n(a){return void 0!==a}function ba(){}function ca(a){a.rb=function(){return a.ld?a.ld:a.ld=new a}}
 function da(a){var b=typeof a;if("object"==b)if(a){if(a instanceof Array)return"array";if(a instanceof Object)return b;var c=Object.prototype.toString.call(a);if("[object Window]"==c)return"object";if("[object Array]"==c||"number"==typeof a.length&&"undefined"!=typeof a.splice&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("splice"))return"array";if("[object Function]"==c||"undefined"!=typeof a.call&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("call"))return"function"}else return"null";
 else if("function"==b&&"undefined"==typeof a.call)return"object";return b}function ea(a){var b=da(a);return"array"==b||"object"==b&&"number"==typeof a.length}function q(a){return"string"==typeof a}function fa(a){return"number"==typeof a}function ga(a){var b=typeof a;return"object"==b&&null!=a||"function"==b}function ha(a,b,c){return a.call.apply(a.bind,arguments)}

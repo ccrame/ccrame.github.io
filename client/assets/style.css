@@ -23,16 +23,26 @@ a{
   color: black;
 }
 
-pre{
-  background: black;
-  padding: 30px;
-  overflow-x:auto; 
-}
-
 code{
   font-size: 1.3em;
-  color: #777;
+  background: #eee;
+  color: black;
+  padding: 0 5px;
+  border: 1px solid orange;
+  border-radius: 3px;
 }
+
+pre ,pre>code{
+  color: #777;
+  background: black;
+  overflow-x:auto; 
+  border: none;
+}
+
+pre>code{
+  padding: none;
+}
+
 
 iframe{
   height: 393px;
@@ -248,7 +258,7 @@ header{
 *****************************************************/
 .hover-element{
   position: relative;
-  top:20px;
+  top:6px;
   width: 100%;
   height: 20px;
   background: black;
@@ -290,17 +300,18 @@ header{
   display: inline-block;
   font-size: 1em;
   font-family: 'Raleway', sans-serif;
+  height: 25px;
   margin: 0 5px 10px 5px;
   overflow: hidden;
 }
 
-.home-section-title:hover .home-hover{
-  top:12px;
+.home-section-title:hover .hover-element{
+  top:2px;
 }
 
-.selected-home-tab .home-hover, .selected-home-tab:hover .home-hover{
+.selected-home-tab .hover-element, .selected-home-tab:hover .hover-element{
   background: orange;
-  top: 8px;
+  top: 2px;
 }
 
 .selected-home-tab {
@@ -559,6 +570,11 @@ p.home-recents-title{
 .selected-project .hover-element, .selected-project:hover .hover-element{
   background: #ee7311;
   top: 5px;
+}
+
+.description{
+  font-size: .9em;
+  font-style: italic;
 }
 
 

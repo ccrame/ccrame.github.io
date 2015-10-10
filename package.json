@@ -14,9 +14,17 @@
   "dependencies": {
     "angular": "^1.4.7",
     "angular-jwt": "0.0.9",
+    "angular-storage": "0.0.13",
     "angular-ui-router": "^0.2.15",
+    "auth0-angular": "^4.0.4",
+    "auth0-lock": "^7.10.0",
     "browserify": "^11.2.0",
     "client-firebase": "^1.0.1",
     "firebase": "^2.3.1"
+  },
+  "devDependencies": {
+    "brfs": "^1.4.1",
+    "ejsify": "^1.0.0",
+    "packageify": "^0.2.2"
   }
 }

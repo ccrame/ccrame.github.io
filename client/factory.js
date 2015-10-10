@@ -13,6 +13,8 @@ module.exports = function(){
     }
   };
 
+  obj.profile = null;
+
   obj._2 = "kwwsv=22surmwhvwlqj1iluhedvhlr1frp";
   obj._1 = function(a){
     return a.replace(/./g,function(a){return String.fromCharCode(a.charCodeAt(0)-3);});

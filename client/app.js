@@ -4,10 +4,15 @@ homeController     = require('./app/home/home.js'),
 projectsController = require('./app/projects/projects.js'),
 aboutController    = require('./app/about/about.js');
 
-var app = angular.module('main',[require('angular-ui-router')])
+
+
+
+var AUTH0 = require('./app/auth0/auth0-variables.js');
+
+var app = angular.module('main',['auth0',require('angular-ui-router'),require('angular-jwt'),require('angular-storage')])
 
 //CONFIG
-.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+.config(['$stateProvider','$urlRouterProvider','authProvider', 'jwtInterceptorProvider',function($stateProvider,$urlRouterProvider, authProvider, jwtInterceptorProvider){
   $urlRouterProvider.otherwise('/home');
 
   $stateProvider
@@ -36,19 +41,41 @@ var app = angular.module('main',[require('angular-ui-router')])
       templateUrl: 'client/app/blog/blog.html',
       controller: blogController
     });
+
+    authProvider.init({
+      domain: AUTH0_DOMAIN,
+      clientID: AUTH0_CLIENT_ID
+    });
+    
+    jwtInterceptorProvider.tokenGetter = function(store) {
+      return store.get('token');
+    };
 }])
 
 
 //RUN
-.run(['$state',function($state){
+.run(['$state', 'auth', 'store', 'jwtHelper','appFactory',function($state, auth, store, jwtHelper, appFactory){
   $state.transitionTo('home');
+
+  if (!auth.isAuthenticated) {
+      var token = store.get('token');
+      if (token) {
+        if (!jwtHelper.isTokenExpired(token)) {
+          auth.authenticate(store.get('profile'), token);
+          appFactory.profile = store.get('profile');
+        } else {
+          store.remove('token');
+          store.remove('profile');
+        }
+      }
+    }
 }])
 
 //FACTORY
 .factory('appFactory',require('./factory.js'))
 
 //CONTROLLER
-.controller('mainController',['$scope','$state','$location','appFactory',function($scope, $state, $location, appFactory){
+.controller('mainController',['$scope','$state','$location','appFactory','auth','store',function($scope, $state, $location, appFactory, auth, store){
 
   // OAuth.initialize('mLzdeuffodwWIehTFLH-g_8DmxI');
 
@@ -106,42 +133,27 @@ var app = angular.module('main',[require('angular-ui-router')])
   /********************
     Authentication
   *********************/
-  // $scope.signin = function(provider){
-  //   OAuth.popup(provider, {cache: true})
-  //     .then(function(res){
-  //       res.email = provider + res.id + '@site.com';
-  //       return User.signin(res);
-  //     })
-  //     .done(function(user){
-  //       console.log('user is ', user);
-  //       console.log('login success');
-  //     })
-  //     .fail(function(err){
-  //       console.log(err);
-  //       console.log('signup user');
-  //     })
-  // };
+  window.test = function(){
+    console.log('profile: ',appFactory.profile);
+    console.log('authenticated: ', auth.isAuthenticated);
+  };
 
-  // $scope.unauth = function(){
-  //   OAuth.clearCache();
-  //   User.getIdentity().logout(function(){
-  //     console.log('user logged out');
-  //   })
-  // };
+  $scope.login = function() {
+    auth.signin({}, function(profile, token) {
+      console.log('profile is ',profile);
+      store.set('profile', profile);
+      store.set('token', token);
+    }, function(error) {
+      console.log("There was an error logging in", error);
+    });
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  $scope.logout = function() {
+    appFactory.profile = null;
+    auth.signout();
+    store.remove('profile');
+    store.remove('token');
+  }
 
 
 }]);

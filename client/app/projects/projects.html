@@ -4,9 +4,11 @@
         <div class="project-title">
             <div class="project-title-arrows">
                 <i class="fa fa-angle-left fa-2x black highlight pointer" ng-if="selected!==0" ng-click="go('left')"></i>
-            </div>
-            <a ng-href={{projectLinks[selected]}} ng-bind="projects[selected]"></a>
-            <div class="project-title-arrows">
+            </div><!--
+         --><div style="display: inline-block;">
+                <a ng-href={{projectLinks[selected]}} ng-bind="projects[selected]"></a>
+            </div><!--
+         --><div class="project-title-arrows">
                 <i class="fa fa-angle-right fa-2x black highlight pointer" ng-if="selected!==projects.length-1" ng-click="go('right')"></i>
             </div>
         </div>
@@ -14,21 +16,21 @@
 
     <div ng-if="selected === 0">
         <div class="project-description"> 
-            <p>A social media app where artists can stream videos to their fans</p>
+            <p class="description">A social media app where artists can stream videos to their fans</p>
         </div>
         <img src="./client/assets/linelevel.png" alt="Linelevel">
     </div>
 
     <div ng-if="selected === 1">
         <div class="project-description">
-            <p>A site that allows users to compare politicians' voting histories</p>
+            <p class="description">A site that allows users to compare politicians' voting histories</p>
         </div>
         <img src="./client/assets/politicalprofiler.png" alt="Political Profiler">
     </div>
 
     <div ng-if="selected === 2">
         <div class="project-description"> 
-            <p>A web app where users can manage their daily tasks and share collections of tasks</p>
+            <p class="description">A web app where users can manage their daily tasks and share collections of tasks</p>
         </div>
         <img src="./client/assets/challengeaccepted.png" alt="Challenge Accepted!">
     </div>

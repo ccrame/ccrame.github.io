@@ -16,7 +16,6 @@
 
 <p>As you can see, it’s very simple to use. Just use apply to enclose the statement that refuses to update on its own. After using this, you will notice that the data does indeed update. You may also notice errors springing up. Don’t worry. The fix is just as simple.</p>
 <pre><code>
-
   data.on("child_added", function(info){
     if(!$scope.$$phase){
       $scope.$apply(function(){
@@ -31,7 +30,6 @@
 
 <p>The error is caused by Angular attempting to perform an action multiple times. By adding the check to <code>$scope.$$phase</code>, the code makes sure that the action is only performed once per cycle. Now, if you are planning to use this code throughout your controllers, it may be a good idea to put this code into a factory:</p>
 <pre><code>
-
   // In the Factory 'appFactory'
   Obj.apply = function(scope,cb){
     if(!scope.$$phase){
@@ -54,8 +52,8 @@
 
 <p>Now it is much simpler to re-use this code within any controller.</p>
 <p>$watch<br>This is another way to update the scope when it refuses to do so. The $watch method takes two arguments, both callback functions. The first callback requires a return statement and it is the change in this statement that triggers the second callback function.</p>
-<pre><code>
 
+<pre><code>
   $scope.messages= [];
   $scope.lastMessage = '';
 

@@ -2,7 +2,6 @@
 <p>To start off, install gulp by typing <code>npm install --save-dev gulp</code>.  This line of code will ensure that gulp is also stored into the dev dependencies of your package.json.  Once that is done, create a js file. </p>
 <p>The gulp file should include necessary dependencies.  In order to use jshint, the gulp module of jshint is required, so type <code>npm install --save-dev gulp-jshint</code> to take care of that. Once all of the dependencies are installed, a simple gulp file looks something like this: </p>
 <pre><code>
-
   var gulp = require('gulp');
   var jshint = require('gulp-jshint');
 
@@ -16,7 +15,6 @@
 <p>As you can see, there are a lot of useful properties within the gulp object.  To create a task, simply use <code>gulp.task(&#39;taskName&#39;,callbackFunction);</code>.  Any actions to be performed by this task is included in the callback function.  <code>gulp.src()</code> takes a pathname as an argument and any action performed is done on the file specified here.  Every action performed on the file is added by using the <code>gulp.pipe()</code> function.  In the above example, after the source is given, “gulp-jshint” is used to check the syntax of the file.</p>
 <p>To run this task, simply type <code>gulp syntaxCheck</code> on your console.  To set a default task for gulp, simply create a task called “default” and pass an array of tasks as the second argument.  </p>
 <pre><code>
-
   gulp.task('default',['syntaxCheck']);
   
 </code></pre>
