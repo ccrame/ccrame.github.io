@@ -49,6 +49,13 @@ iframe{
   width: 700px;
 }
 
+
+
+
+
+
+
+
 /*****************************************************
 
     HEADER SECTION
@@ -85,7 +92,6 @@ header{
   height: 50px;
   line-height: 50px;
 }
-
 
 .site-logo img, .site-logo img:hover, .site-logo:hover >*{
   color: black;
@@ -132,9 +138,6 @@ header{
   cursor: pointer;
 }
 
-@media (min-width: 700px){
-  .hamburger, .nav-mobile-close, .nav-mobile-menu{ display: none; }
-}
 
 .nav-item:hover > *{
   background: black;
@@ -164,16 +167,6 @@ header{
   color: #ee7311;
 }
 
-.contact-toggle{
-  z-index: 9;
-  position: absolute;
-  text-align: left;
-  right: 0;
-  top: 0;
-  width: 100px;
-  height: 50px;
-  line-height: 50px;
-}
 
 .contact-toggle:hover{
   color: #ee7311;
@@ -205,8 +198,12 @@ header{
   width: 445px;
   line-height: 50px;
   top: 0;
-  right: -455px;
+  right: -450px;
   transition: right .6s;
+}
+
+.contact-container-close-tab .fa{
+  transition: content .5s;
 }
 
 .contact-container-overlay{
@@ -224,6 +221,19 @@ header{
 }
 
 
+/*****************
+  User Profile
+******************/
+.contact-toggle{
+  z-index: 9;
+  position: absolute;
+  text-align: left;
+  right: 0;
+  top: 0;
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+}
 
 /*****************
   Header image 
@@ -248,6 +258,13 @@ header{
 .blog{ top: -200px;}
 .projects{ top: -400px; }
 .about{ top: -600px; }
+
+
+
+
+
+
+
 
 
 
@@ -610,6 +627,14 @@ p.home-recents-title{
 }
 
 
+
+
+
+
+
+
+
+
 /****************************************************
 
     FOOTER SECTION
@@ -633,6 +658,14 @@ footer{
   font-family: 'Raleway', sans-serif;
   cursor: pointer;
 }
+
+
+
+
+
+
+
+
 
 
 /****************************************************
@@ -758,10 +791,6 @@ footer{
     width: auto;
   }
 
-  .article-info{
-    display: none;
-  }
-
 
   /* Blog Styling */
 
@@ -799,11 +828,15 @@ footer{
   }
   
   /* Hide these elements in mobile mode */
-  .nav-item{ display: none; }
-  .contact-container, .contact-toggle{ display: none;}
-  .home-links{display: none; }
-  .header-background{ display: none;}
+  .desktop-only{display: none;}
 }
+
+
+
+
+
+
+
 
 
 
@@ -814,6 +847,19 @@ footer{
 *****************************************************/
 .pointer{
   cursor: pointer;
+}
+
+.button{
+  display: inline-block;
+  background: #ee7311;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.button:hover{
+  background: lightblue;
+  color: black;
 }
 
 .highlight:hover{
@@ -834,4 +880,8 @@ footer{
 
 .clear{
   color: transparent;
+}
+
+@media (min-width: 701px){
+  .mobile-only{display: none;}
 }

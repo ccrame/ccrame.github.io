@@ -4,25 +4,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="client/assets/logo.png">
     <title>Charles Crame</title>
+
     <script type="text/javascript" src="client/app/auth0/auth0-variables.js"></script>
     <script type="text/javascript" src="client/app.bundle.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="client/assets/style.css">
-    <!--script src="client/lib/oauth-js/dist/oauth.min.js"></script-->
+
+    <!-- Auth0 -->
     <script type="text/javascript" src="https://cdn.auth0.com/js/lock-7.js"></script>
-    <!--script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular-cookies.js"></script-->
-
     <script type="text/javascript" src="https://cdn.auth0.com/w2/auth0-angular-4.js"></script>
-    <!--script src="//cdn.rawgit.com/auth0/angular-storage/master/dist/angular-storage.js" type="text/javascript"></script-->
-    <!--script src="//cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js" type="text/javascript"> </script-->
 </head>
-
-
 
 <body ng-app="main" ng-controller="mainController">
 
     <!-- Navigation bar for mobile only (width<=700px)-->
-    <nav ng-click="openMobileNav()" ng-class="{'show':show}" class="nav-mobile-menu">
+    <nav ng-click="openMobileNav()" ng-class="{'show':show}" class="nav-mobile-menu mobile-only">
         <div class="nav-mobile-item" ng-class="{selected: selected[0]}" ng-click="redirect('home',0)">     Home     </div><!--
      --><div class="nav-mobile-item" ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)">     Blog     </div><!--
      --><div class="nav-mobile-item" ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)"> Projects </div><!--
@@ -30,22 +27,26 @@
     </nav>
 
     <header>
-        <!-- Navigation bar when width > 700px -->
+        <!-- Navigation bar for desktop (width >= 701px) -->
         <nav class="nav-bar">
-            <nav ng-click="openMobileNav()" class="hamburger fa fa-bars fa-2x"></nav>
+            <nav ng-click="openMobileNav()" class="hamburger fa fa-bars fa-2x mobile-only"></nav>
             <div class="site-logo" ng-click="redirect('home',0)"><img src="client/assets/logo.png" alt="home"><div class="site-title pointer">Charles Crame</div></div>
-            <div class="nav-item" ng-class="{selected: selected[0]}" ng-click="redirect('home',0)">     Home     <div class="nav-hover"></div></div><!--
-         --><div class="nav-item" ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)">     Blog     <div class="nav-hover"></div></div><!--
-         --><div class="nav-item" ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)"> Projects <div class="nav-hover"></div></div><!--
-         --><div class="nav-item" ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">    About    <div class="nav-hover"></div></div>
+            <div class="nav-item desktop-only" ng-class="{selected: selected[0]}" ng-click="redirect('home',0)">     Home     <div class="nav-hover"></div></div><!--
+         --><div class="nav-item desktop-only" ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)">     Blog     <div class="nav-hover"></div></div><!--
+         --><div class="nav-item desktop-only" ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)"> Projects <div class="nav-hover"></div></div><!--
+         --><div class="nav-item desktop-only" ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">    About    <div class="nav-hover"></div></div>
+
+            <!-- User Login -->
+            <div class="contact-toggle pointer desktop-only" ng-class="{visible:visible}" ng-click="toggleVisibility()" ng-bind="contactMessage"></div>
 
             <!-- Contact panel -->
-            <div class="contact-container-overlay" ng-class="{visible:visible}" ng-click="toggleVisibility()"></div>
+            <div class="contact-container-overlay desktop-only" ng-class="{visible:visible}" ng-click="toggleVisibility()"></div>
 
-            <div class="contact-toggle pointer" ng-class="{visible:visible}" ng-click="toggleVisibility()" ng-bind="contactMessage"></div>
+            <div class="contact-container-close-tab desktop-only" ng-class="{visible:visible}" ng-click="toggleVisibility()">
+                <i class="fa fa-times fa-2x highlight white pointer"></i>
+            </div>
 
-            <div class="contact-container-close-tab pointer highlight white" ng-class="{visible:visible}" ng-click="toggleVisibility()"><i class="fa fa-times fa-2x"></i></div>
-            <div class="contact-container" ng-class="{visible:visible}">
+            <div class="contact-container desktop-only" ng-class="{visible:visible}">
                 <div class="contact-icon">
                     <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x"></i></a> 
                 </div>
@@ -61,11 +62,11 @@
     </header>
 
     <!-- Site Banner -->
-    <div class="header-background">
+    <div class="header-background desktop-only">
         <img src="client/assets/collage1.jpg" alt="space" ng-class="{home:selected[0],blog:selected[1],projects:selected[2],about:selected[3]}">
     </div>
 
-    <!-- Authentication -->
+    <!-- Authentication Testing -->
     <section class="outer-margin">
         <div><button ng-click="login()">login</button></div>
         <div><button ng-click="logout()">logout</button></div>
