@@ -144,10 +144,10 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
   /********************
     Authentication
   *********************/
-  window.test = function(){
-    console.log('profile: ', $scope.userProfile);
-    console.log('authenticated: ', auth.isAuthenticated);
-  };
+  // window.test = function(){
+  //   console.log('profile: ', $scope.userProfile);
+  //   console.log('authenticated: ', auth.isAuthenticated);
+  // };
 
   // update dropdown message and user profile
   var updateCurrentProfile = function(profile){

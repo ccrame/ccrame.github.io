@@ -223,7 +223,7 @@ header{
   text-align: center;
   right: 0;
   top: 0;
-  width: 150px;
+  width: 200px;
   height: 50px;
   line-height: 50px;
 }
@@ -236,14 +236,28 @@ header{
   padding: 15px 0;
   top: 50px;
   right: 0;
-  width: 150px;
+  width: 200px;
   background: #eee;
   border: 1px solid #ccc;
   border-top: none;
 }
 
-.profile-picture img{
+.profile-picture{
+  width: ;
   max-height: 50px;
+  text-align: left;
+}
+
+.profile-picture span{
+  padding: 0 5px;
+  vertical-align: top;
+  font-size: .7em;
+}
+
+.profile-picture img{
+  position: relative;
+  max-height: 46px;
+  border: 2px solid #ccc;
   border-radius: 100%;
   width: auto;
 }
@@ -906,6 +920,10 @@ footer{
 
 .clear{
   color: transparent;
+}
+
+.block{
+  display: block;
 }
 
 @media (min-width: 701px){

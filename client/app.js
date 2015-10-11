@@ -5,10 +5,6 @@ projectsController = require('./app/projects/projects.js'),
 aboutController    = require('./app/about/about.js');
 
 
-
-
-var AUTH0 = require('./app/auth0/auth0-variables.js');
-
 var app = angular.module('main',['auth0',require('angular-ui-router'),require('angular-jwt'),require('angular-storage')])
 
 //CONFIG
@@ -143,10 +139,10 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
   /********************
     Authentication
   *********************/
-  window.test = function(){
-    console.log('profile: ', $scope.userProfile);
-    console.log('authenticated: ', auth.isAuthenticated);
-  };
+  // window.test = function(){
+  //   console.log('profile: ', $scope.userProfile);
+  //   console.log('authenticated: ', auth.isAuthenticated);
+  // };
 
   // update dropdown message and user profile
   var updateCurrentProfile = function(profile){

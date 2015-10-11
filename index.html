@@ -39,9 +39,9 @@
          --><div class="nav-item desktop-only" ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">    About    <div class="nav-hover"></div></div>
 
             <!-- Toggle User Profile Menu -->
-            <div class="user-profile-toggle pointer highlight desktop-only" ng-class="{visible: show.userProfile}">
+            <div class="user-profile-toggle pointer highlight desktop-only block" ng-class="{visible: show.userProfile}">
                 <div ng-if="!userProfile" ng-click="signIn()">Sign In</div>
-                <div ng-if="userProfile" class="profile-picture" ng-click="toggle('userProfile')"><img ng-src={{userProfile.picture}} alt="user"></div>
+                <div ng-if="userProfile" class="profile-picture" ng-click="toggle('userProfile')"><img ng-src={{userProfile.picture}} alt="user"><span>{{userProfile.name}}</span></div>
             </div>
 
             <!-- Contact panel -->
@@ -77,7 +77,6 @@
         <img src="client/assets/collage1.jpg" alt="space" ng-class="{home:selected[0],blog:selected[1],projects:selected[2],about:selected[3]}">
     </div>
 
-    <!-- Authentication Testing -->
     <section class="outer-margin">
         <div ui-view class="container"></div>
     </section>
