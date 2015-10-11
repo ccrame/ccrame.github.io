@@ -78,10 +78,12 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
 .controller('mainController',['$scope','$state','$location','appFactory','auth','store',function($scope, $state, $location, appFactory, auth, store){
 
   // OAuth.initialize('mLzdeuffodwWIehTFLH-g_8DmxI');
-
-  $scope.show = false;
-  $scope.contactMessage = "Contact";
-  $scope.visible = false;
+  $scope.show = {};
+  $scope.show.nav = false;
+  $scope.show.contact = false;
+  $scope.show.userProfile = false;
+  $scope.userProfile = appFactory.profile;
+  $scope.show.overlay = [];
   $scope.selected = [0,0,0,0];
   // window.console.log('oauth is ', OAuth);
 
@@ -119,14 +121,22 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
   // initialize page on load
   init();
 
-
   /********************
-    Contacts Side Panel
+    Helper Functions
   *********************/
-  $scope.toggleVisibility = function(){
-    $scope.visible = !$scope.visible;
-    if($scope.visible) {$scope.contactMessage = "Close";}
-    else {$scope.contactMessage = "Contact";}
+  $scope.toggle = function(item){
+    $scope.show[item] = !$scope.show[item];
+
+    if($scope.show[item]){
+      $scope.show.overlay.push(item);
+    } else {
+      $scope.show.overlay.pop();
+    }
+  };
+
+  $scope.closeAllMenu = function(){
+    var temp = $scope.show.overlay.pop();
+    $scope.show[temp] = false;
   };
 
 
@@ -134,26 +144,36 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
     Authentication
   *********************/
   window.test = function(){
-    console.log('profile: ',appFactory.profile);
+    console.log('profile: ', $scope.userProfile);
     console.log('authenticated: ', auth.isAuthenticated);
   };
 
-  $scope.login = function() {
-    auth.signin({}, function(profile, token) {
-      console.log('profile is ',profile);
-      store.set('profile', profile);
-      store.set('token', token);
-    }, function(error) {
-      console.log("There was an error logging in", error);
+  // update dropdown message and user profile
+  var updateCurrentProfile = function(profile){
+    appFactory.update($scope,function(scope){
+      scope.userProfile = profile;
     });
-  }
+  };
 
-  $scope.logout = function() {
-    appFactory.profile = null;
+  $scope.signIn = function() {
+    // log in
+    if(!auth.isAuthenticated){
+      auth.signin({}, function(profile, token) {
+        updateCurrentProfile(profile);
+        store.set('profile', profile);
+        store.set('token', token);
+      }, function(error) {
+        console.log("There was an error logging in", error);
+      });
+    }
+  };
+
+  $scope.signOut = function(){
+    updateCurrentProfile(null);
     auth.signout();
     store.remove('profile');
     store.remove('token');
-  }
-
+    $scope.closeAllMenu();
+  };
 
 }]);

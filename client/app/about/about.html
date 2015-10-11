@@ -2,7 +2,12 @@
     <div class="about-title">About Page</div>
     <br>
     <div class="about-content">
-        <div class="profile-picture"><img src="./client/assets/me.jpeg" alt="Charles Crame"><br><div class="pointer button" ng-click="toggleVisibility()">Contact</div></div>
+
+        <div class="about-profile-picture">
+            <img src="./client/assets/me.jpeg" alt="Charles Crame"><br>
+            <div class="pointer button desktop-only" ng-click="toggle('contact')">Contact</div>
+        </div>
+
         <p>I am a full-stack software engineer based in Los Angeles.</p>
         <br><br>
         <p><b>STRONG:</b> <i class="description">JavaScript, MongoDB, Git, HTML, CSS, AJAX, Angular.js, Gulp.js, Firebase, Bootstrap, Heroku, Express.js, Node.js</i></p>
@@ -14,4 +19,11 @@
         <div class="center">Pending Features</div>
         <div ng-repeat="feature in features"></div>
     </div>
+
+    <div class="mobile-only">
+        <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x mobile-contact-icon"></i></a> 
+        <a href="https://twitter.com/cpcrame"><i class="fa fa-twitter fa-2x mobile-contact-icon"></i></a>
+        <a href="https://github.com/ccrame"><i class="fa fa-github fa-2x mobile-contact-icon"></i></a>
+    </div>
+
 </section>

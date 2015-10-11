@@ -8,45 +8,49 @@
     <script type="text/javascript" src="client/app/auth0/auth0-variables.js"></script>
     <script type="text/javascript" src="client/app.bundle.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="client/assets/style.css">
 
     <!-- Auth0 -->
-    <script type="text/javascript" src="https://cdn.auth0.com/js/lock-7.js"></script>
+    <script type="text/javascript" src="client/lib/lock-7.5.min.js"></script>
     <script type="text/javascript" src="https://cdn.auth0.com/w2/auth0-angular-4.js"></script>
 </head>
 
 <body ng-app="main" ng-controller="mainController">
 
     <!-- Navigation bar for mobile only (width<=700px)-->
-    <nav ng-click="openMobileNav()" ng-class="{'show':show}" class="nav-mobile-menu mobile-only">
+    <nav ng-click="toggle('nav')" ng-class="{'show':show.nav}" class="nav-mobile-menu mobile-only">
         <div class="nav-mobile-item" ng-class="{selected: selected[0]}" ng-click="redirect('home',0)">     Home     </div><!--
      --><div class="nav-mobile-item" ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)">     Blog     </div><!--
      --><div class="nav-mobile-item" ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)"> Projects </div><!--
-     --><div class="nav-mobile-item" ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">    About    </div>
+     --><div class="nav-mobile-item" ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">    About    </div><!--
+     --><div ng-if="userProfile" class="nav-mobile-item" ng-click="signOut()">Sign Out</div><!--
+     --><div ng-if="!userProfile" class="nav-mobile-item" ng-click="signIn()">Sign In</div>
     </nav>
 
     <header>
         <!-- Navigation bar for desktop (width >= 701px) -->
         <nav class="nav-bar">
-            <nav ng-click="openMobileNav()" class="hamburger fa fa-bars fa-2x mobile-only"></nav>
+            <nav ng-click="toggle('nav')" class="hamburger fa fa-bars fa-2x mobile-only"></nav>
             <div class="site-logo" ng-click="redirect('home',0)"><img src="client/assets/logo.png" alt="home"><div class="site-title pointer">Charles Crame</div></div>
             <div class="nav-item desktop-only" ng-class="{selected: selected[0]}" ng-click="redirect('home',0)">     Home     <div class="nav-hover"></div></div><!--
          --><div class="nav-item desktop-only" ng-class="{selected: selected[1]}" ng-click="redirect('blog',1)">     Blog     <div class="nav-hover"></div></div><!--
          --><div class="nav-item desktop-only" ng-class="{selected: selected[2]}" ng-click="redirect('projects',2)"> Projects <div class="nav-hover"></div></div><!--
          --><div class="nav-item desktop-only" ng-class="{selected: selected[3]}" ng-click="redirect('about',3)">    About    <div class="nav-hover"></div></div>
 
-            <!-- User Login -->
-            <div class="contact-toggle pointer desktop-only" ng-class="{visible:visible}" ng-click="toggleVisibility()" ng-bind="contactMessage"></div>
+            <!-- Toggle User Profile Menu -->
+            <div class="user-profile-toggle pointer highlight desktop-only" ng-class="{visible: show.userProfile}">
+                <div ng-if="!userProfile" ng-click="signIn()">Sign In</div>
+                <div ng-if="userProfile" class="profile-picture" ng-click="toggle('userProfile')"><img ng-src={{userProfile.picture}} alt="user"></div>
+            </div>
 
             <!-- Contact panel -->
-            <div class="contact-container-overlay desktop-only" ng-class="{visible:visible}" ng-click="toggleVisibility()"></div>
 
-            <div class="contact-container-close-tab desktop-only" ng-class="{visible:visible}" ng-click="toggleVisibility()">
+            <div class="contact-container-close-tab desktop-only" ng-class="{visible:show.contact}" ng-click="toggle('contact')">
                 <i class="fa fa-times fa-2x highlight white pointer"></i>
             </div>
 
-            <div class="contact-container desktop-only" ng-class="{visible:visible}">
+            <div class="contact-container desktop-only" ng-class="{visible:show.contact}">
                 <div class="contact-icon">
                     <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x"></i></a> 
                 </div>
@@ -59,7 +63,14 @@
             </div>
 
         </nav>
+
+        <!-- User Profile -->
+        <div class="user-profile-dropdown highlight pointer" ng-class="{visible: show.userProfile}" ng-click="signOut()">Sign Out</div>
     </header>
+
+    <!-- Close All Menus -->
+    <div class="menu-overlay desktop-only" ng-class="{visible:show.overlay.length}" ng-click="closeAllMenu()"></div>
+
 
     <!-- Site Banner -->
     <div class="header-background desktop-only">
@@ -68,8 +79,6 @@
 
     <!-- Authentication Testing -->
     <section class="outer-margin">
-        <div><button ng-click="login()">login</button></div>
-        <div><button ng-click="logout()">logout</button></div>
         <div ui-view class="container"></div>
     </section>
 

@@ -10,6 +10,7 @@ body,p,h1,h2,h3,table,div,section,nav,header{
 
 body{
   font-family: 'Open Sans', sans-serif;
+  position: relative;
 }  
 
 html{
@@ -63,8 +64,19 @@ iframe{
 *****************************************************/
 header{
   width: 100%;
+  position: relative;
   max-width: 1066px;
   margin: auto;
+}
+
+/* This closes all open menus when clicked */
+.menu-overlay{
+  z-index: 5;
+  position: fixed;
+  display: none;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 
@@ -167,11 +179,6 @@ header{
   color: #ee7311;
 }
 
-
-.contact-toggle:hover{
-  color: #ee7311;
-}
-
 .contact-container{
   position: fixed;
   z-index: 10;
@@ -206,41 +213,48 @@ header{
   transition: content .5s;
 }
 
-.contact-container-overlay{
-  z-index: 5;
-  position: fixed;
-  display: none;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.visible{
-  right: 0;
-  display: block;
-}
-
 
 /*****************
   User Profile
 ******************/
-.contact-toggle{
+.user-profile-toggle{
   z-index: 9;
   position: absolute;
-  text-align: left;
+  text-align: center;
   right: 0;
   top: 0;
-  width: 100px;
+  width: 150px;
   height: 50px;
   line-height: 50px;
 }
+
+.user-profile-dropdown{
+  display: none;
+  text-align: center;
+  z-index: 9;
+  position: absolute;
+  padding: 15px 0;
+  top: 50px;
+  right: 0;
+  width: 150px;
+  background: #eee;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.profile-picture img{
+  max-height: 50px;
+  border-radius: 100%;
+  width: auto;
+}
+
 
 /*****************
   Header image 
 ******************/
 .header-background{
+  position: relative;
   z-index: -1;
-  top: 50px;
   margin: auto;
   height: 200px;
   border-radius: 2px;
@@ -261,6 +275,13 @@ header{
 
 
 
+/*****************
+  Header Helpers
+******************/
+.visible{
+  right: 0;
+  display: block;
+}
 
 
 
@@ -378,7 +399,6 @@ header{
   min-width: 550px;
   width: 100%;
 }
-
 
 .home-recents-description{
   vertical-align: top;
@@ -611,15 +631,16 @@ p.home-recents-title{
 .about-content{
   margin: auto;
   width: 60%;
+  min-height: 600px;
   text-align: left;
 }
 
-.profile-picture{
+.about-profile-picture{
   text-align: center;
   margin-bottom: 50px;
 }
 
-.profile-picture img{
+.about-profile-picture img{
   height: 150px;
   width: auto;
   margin: auto;
@@ -693,6 +714,11 @@ footer{
 
 .show{
   top: 0;
+}
+
+.mobile-contact-icon{
+  padding: 10px;
+  margin: 20px;
 }
 
 @media (max-width: 700px){
@@ -828,7 +854,7 @@ footer{
   }
   
   /* Hide these elements in mobile mode */
-  .desktop-only{display: none;}
+
 }
 
 
@@ -884,4 +910,8 @@ footer{
 
 @media (min-width: 701px){
   .mobile-only{display: none;}
+}
+
+@media (max-width: 700px){
+  .desktop-only{display: none;}
 }
