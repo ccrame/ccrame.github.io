@@ -774,7 +774,7 @@ footer{
   .nav-bar{
     text-align: right;
     min-width: 300px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #ddd;
   }
 
   .hamburger{
