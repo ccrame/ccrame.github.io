@@ -887,7 +887,7 @@ footer{
       GLOBAL CLASSES
 
 *****************************************************/
-.pointer{
+.pointer, .pointer *{
   cursor: pointer;
 }
 
@@ -904,11 +904,11 @@ footer{
   color: black;
 }
 
-.highlight:hover{
+.highlight:hover, .highlight:hover *{
   color: #ee7311;
 }
 
-.white{
+.white, .white *{
   color: white;
 }
 
