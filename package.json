@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.4.7",
+    "angular-cookies": "^1.4.7",
     "angular-jwt": "0.0.9",
     "angular-storage": "0.0.13",
     "angular-ui-router": "^0.2.15",
