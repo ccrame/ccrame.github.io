@@ -58,7 +58,7 @@
 
     <div class="article-list-container">
         <div class="article-page-title" ng-bind="articleMessage"></div>
-        <div ng-if="article.title !== articleData.title" class="article-list-content" ng-repeat="article in articles">
+        <div ng-if="article.title !== articleData.title" class="article-list-content" ng-repeat="article in articles | orderBy: 'date':true">
             <div class="article-title pointer" ng-click="redirect('article',1,{article:article.key})" ng-bind="article.title"></div>
             <div class="article-description" ng-bind="article.description"></div>
         </div>
