@@ -5,7 +5,7 @@ projectsController = require('./app/projects/projects.js'),
 aboutController    = require('./app/about/about.js');
 
 
-var app = angular.module('main',['auth0',require('angular-ui-router'),require('angular-jwt'),require('angular-storage')])
+var app = angular.module('main',['auth0',require('angular-ui-router'),require('angular-jwt'),require('angular-storage'), require('angular-cookies')])
 
 //CONFIG
 .config(['$stateProvider','$urlRouterProvider','authProvider', 'jwtInterceptorProvider',function($stateProvider,$urlRouterProvider, authProvider, jwtInterceptorProvider){
@@ -50,7 +50,7 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
 
 
 //RUN
-.run(['$state', 'auth', 'store', 'jwtHelper','appFactory','ngCookies',function($state, auth, store, jwtHelper, appFactory, ngCookies){
+.run(['$state', 'auth', 'store', 'jwtHelper','appFactory',function($state, auth, store, jwtHelper, appFactory){
   $state.transitionTo('home');
 
   if (!auth.isAuthenticated) {
