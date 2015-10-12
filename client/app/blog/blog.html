@@ -5,16 +5,18 @@
         <article class="article-content" ng-include="articleData.url"></article>
     </div>
 
-    <div class="center" ng-if="articleData === null && comments !== null "><i class="fa fa-gear fa-spin fa-4x black"></i></div>
+    <div ng-if="!showComments && articleData !== null" class="center" ng-click="loadComments()">Load Comments</div>
+
+    <div ng-if="articleData === null && comments !== null" class="center"><i class="fa fa-gear fa-spin fa-4x black"></i></div>
 
 
 
-    <div class="article-comment-container hide" ng-if="comments !== null">
+    <div ng-if="articleData !== null && showComments" class="article-comment-container">
 
         <!-- Comment Submit Form -->
         <div class="article-comment-input">
             <form>
-                <textarea id="comment-form" ng-if="0" style="resize:none;"></textarea><br>
+                <textarea class="comment-form"></textarea><br>
                 <input type="submit" class="article-comment-submit highlight" ng-click="postComment()" value="Post Comment">
             </form>
         </div>
@@ -32,7 +34,7 @@
 
     <div class="article-list-container">
         <div class="article-page-title" ng-bind="articleMessage"></div>
-        <div class="article-list-content" ng-repeat="article in articles">
+        <div ng-if="article.title !== articleData.title" class="article-list-content" ng-repeat="article in articles">
             <div class="article-title pointer" ng-click="redirect('article',1,{article:article.key})" ng-bind="article.title"></div>
             <div class="article-description" ng-bind="article.description"></div>
         </div>

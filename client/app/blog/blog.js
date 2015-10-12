@@ -4,6 +4,7 @@ module.exports = function($scope, appFactory, $state, $stateParams){
   $scope.articleData = null;
   $scope.articles = [];
   $scope.comments = null;
+  $scope.showComments = false;
   $scope.articleMessage = "Blog Posts";
 
   if($stateParams.article){
@@ -50,4 +51,10 @@ module.exports = function($scope, appFactory, $state, $stateParams){
   $scope.postComment = function(){
     window.console.log('hello');
   };
+
+  $scope.loadComments = function(){
+    $scope.showComments = true;
+  };
+
+
 };

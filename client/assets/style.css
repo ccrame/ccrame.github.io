@@ -192,13 +192,20 @@ header{
   transition: right .5s;
 }
 
-.contact-icon{
+.contact-item{
   padding: 10px 0;
 }
 
-.contact-icon > span{
+.contact-icon{
+  margin: 0 20px 0 0;
+  display: inline-block;
+  width: 40px;
+  text-align: center;
+}
+
+.contact-item span{
   color: #222;
-  transition: color .3s;
+  transition: color .7s;
 }
 
 .contact-container-close-tab{
@@ -535,8 +542,8 @@ p.home-recents-title{
   margin: 40px 0;
 }
 
-#comment-form{
-  width: 60%;
+.comment-form{
+  min-width: 60%;
   height: 70px;
 }
 
@@ -854,6 +861,11 @@ footer{
     text-align: center;
   }
 
+  .comment-form{
+    min-width: 90%;
+    resize: none;
+  }
+
 
   /* Project Styling */
 
@@ -923,6 +935,14 @@ footer{
 
 .center{
   text-align: center;
+}
+
+.right{
+  text-align: right;
+}
+
+.left{
+  text-align: left;
 }
 
 .clear{

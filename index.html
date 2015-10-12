@@ -54,24 +54,39 @@
             </div>
 
             <div class="contact-container desktop-only" ng-class="{visible:show.contact}">
-                <div class="contact-icon">
-                    <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x"></i></a>
+
+                <div class="contact-item highlight">
+                    <div class="contact-icon">
+                        <a href="https://linkedin.com/in/ccrame"><i class="fa fa-linkedin fa-2x"></i></a>
+                    </div>
                     <span>LinkedIn</span> 
                 </div>
-                <div class="contact-icon">
-                    <a href="https://twitter.com/cpcrame"><i class="fa fa-twitter fa-2x"></i></a>
+
+                <div class="contact-item highlight">
+                    <div class="contact-icon">
+                        <a href="https://twitter.com/cpcrame"><i class="fa fa-twitter fa-2x"></i></a>
+                    </div>
                     <span>Twitter</span>
                 </div>
-                <div class="contact-icon">
-                    <a href="https://github.com/ccrame"><i class="fa fa-github fa-2x"></i></a>
+
+                <div class="contact-item highlight">
+                    <div class="contact-icon">
+                        <a href="https://github.com/ccrame"><i class="fa fa-github fa-2x"></i></a>
+                    </div>
                     <span>GitHub</span>
                 </div>
-                <div class="contact-icon">
-                    <a href="mailto:ccrame@gmail.com?subject=Contact via charlescrame.io"><i class="fa fa-envelope fa-2x"></i></a>
+
+                <div class="contact-item highlight">
+                    <div class="contact-icon">
+                        <a href="mailto:ccrame@gmail.com?subject=Contact via charlescrame.io"><i class="fa fa-envelope fa-2x"></i></a>
+                    </div>
                     <span>Email</span>
                 </div>
-                <div class="contact-icon">
-                    <a href="https://docs.google.com/document/d/12zCKqnzvXm1TGnMHWSeVE18qWkhcF9oEDf2v_J_5f50/edit?usp=sharing"><i class="fa fa-file-text fa-2x"></i></a>
+
+                <div class="contact-item highlight">
+                    <div class="contact-icon">
+                        <a href="https://docs.google.com/document/d/12zCKqnzvXm1TGnMHWSeVE18qWkhcF9oEDf2v_J_5f50/edit?usp=sharing"><i class="fa fa-file-text fa-2x"></i></a>
+                    </div>
                     <span>Resume</span>
                 </div>
             </div>
@@ -98,7 +113,7 @@
     <footer>
         <div class="footer-padding"></div>
         <div>
-            <span class="footer-content" ng-click="redirect('about',3)">&copy; 2015 Charles Crame</span>
+            <span class="footer-content" ng-click="redirect('about',3)">&copy; 2015 Charles Crame</span>&nbsp;&nbsp;|&nbsp;&nbsp;<span class="description pointer" ng-click="toggle('contact')">Contact</span>
         </div>
     </footer>
 </body>
