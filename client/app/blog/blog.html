@@ -7,15 +7,28 @@
 
     <div class="center" ng-if="articleData === null && comments !== null "><i class="fa fa-gear fa-spin fa-4x black"></i></div>
 
-    <div class="article-comment-container" ng-if="comments !== null">
+
+
+    <div class="article-comment-container hide" ng-if="comments !== null">
+
+        <!-- Comment Submit Form -->
         <div class="article-comment-input">
             <form>
                 <textarea id="comment-form" ng-if="0" style="resize:none;"></textarea><br>
                 <input type="submit" class="article-comment-submit highlight" ng-click="postComment()" value="Post Comment">
             </form>
         </div>
-        <div class="article-comment" ng-repeat="comment in comments"></div>
+
+        <!-- Article comments -->
+        <div class="article-comments-container">
+            <div ng-repeat="comment in comments">
+                
+            </div>
+        </div>
+
     </div>
+
+
 
     <div class="article-list-container">
         <div class="article-page-title" ng-bind="articleMessage"></div>

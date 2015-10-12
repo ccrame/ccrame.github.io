@@ -181,11 +181,12 @@ header{
 
 .contact-container{
   position: fixed;
+  text-align: left;
   z-index: 10;
   height: 100%;
-  width: 400px;
+  width: 225px;
   background: #222;
-  padding:100px 0;
+  padding: 100px 0 100px 175px;
   top: 0;
   right: -400px;
   transition: right .5s;
@@ -193,6 +194,11 @@ header{
 
 .contact-icon{
   padding: 10px 0;
+}
+
+.contact-icon > span{
+  color: #222;
+  transition: color .3s;
 }
 
 .contact-container-close-tab{
@@ -527,7 +533,6 @@ p.home-recents-title{
 /* Article Comments */
 .article-comment-container{
   margin: 40px 0;
-  display: none;
 }
 
 #comment-form{
@@ -926,6 +931,14 @@ footer{
 
 .block{
   display: block;
+}
+
+.inline{
+  display: inline-block;
+}
+
+.hide{
+  display: none;
 }
 
 @media (min-width: 701px){
