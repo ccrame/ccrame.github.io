@@ -51,7 +51,7 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
 
 
 //RUN
-.run(['$state', 'auth', 'store', 'jwtHelper','appFactory',function($state, auth, store, jwtHelper, appFactory){
+.run(['$state', 'auth', 'store', 'jwtHelper','appFactory','ngCookies',function($state, auth, store, jwtHelper, appFactory, ngCookies){
   $state.transitionTo('home');
 
   if (!auth.isAuthenticated) {
@@ -258,6 +258,30 @@ module.exports = function($scope, appFactory, $state, auth, $stateParams){
     });
   };
 
+  // show elapsed time since comment posted
+  $scope.commentTime = function(time){
+    time = (new Date()).getTime() - time;
+    //weeks
+    var temp = Math.floor(time / 60480000);
+    if(temp){return temp + 'w';}
+    time = time % 60480000;
+    // days
+    temp = Math.floor(time / 86400000);
+    if(temp){return temp + 'd';}
+    time = time % 86400000;
+    // hours
+    temp = Math.floor(time / 3600000);
+    if(temp){return temp + 'h';}
+    time = time % 3600000;
+    // minutes
+    temp = Math.floor(time / 60000);
+    if(temp){return temp + 'm';}
+    // seconds
+    time = Math.floor(time / 1000);
+    if(time){return time + 's';}
+    return 'just now';
+  };
+
 
 
   var wrapper = function(){
@@ -276,7 +300,7 @@ module.exports = function($scope, appFactory, $state, auth, $stateParams){
       });
     });
 
-    setTimeout(wrapper,1000);
+    setTimeout(wrapper,1);
   };
 
   $scope.toggleComments = function(){

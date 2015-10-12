@@ -50,7 +50,7 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
 
 
 //RUN
-.run(['$state', 'auth', 'store', 'jwtHelper','appFactory',function($state, auth, store, jwtHelper, appFactory){
+.run(['$state', 'auth', 'store', 'jwtHelper','appFactory','ngCookies',function($state, auth, store, jwtHelper, appFactory, ngCookies){
   $state.transitionTo('home');
 
   if (!auth.isAuthenticated) {

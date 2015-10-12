@@ -34,12 +34,21 @@
         <!-- Article comments -->
         <div class="article-comments-container">
             <div ng-repeat="comment in comments | orderBy: 'time':true" class="article-comment">
-                <div>
-                    <a ng-href={{comment.link}}><img ng-src={{comment.picture}} alt="User Image"></a>
-                    <span class="comment-name" ng-bind="comment.name"></span>
-                    <span class="comment-time" ng-bind="comment.time"></span>
+
+                <div class="comment-picture desktop-only">
+                    <a ng-href={{comment.link}}><img ng-src={{comment.picture}} class="pointer" alt="User Image"></a><br>
+                    <a ng-href={{comment.link}}><span class="comment-username highlight pointer" ng-bind="comment.name"></span></a><br>
+                    <span class="description small" ng-bind="commentTime(comment.time)"></span>
+                </div><!--
+             --><div class="comment-picture mobile-only">
+                    <a ng-href={{comment.link}}><img ng-src={{comment.picture}} class="pointer" alt="User Image"></a>
+                    <a ng-href={{comment.link}}><span class="comment-username highlight pointer" ng-bind="comment.name"></span></a>&nbsp;&nbsp;&nbsp;
+                    <span class="description small" ng-bind="commentTime(comment.time)"></span>
+                </div><!--
+             --><div class="comment-body" >
+                    <p ng-bind="comment.text"></p>
                 </div>
-                <p class="comment-text" ng-bind="comment.text"></p>
+
             </div>
         </div>
 

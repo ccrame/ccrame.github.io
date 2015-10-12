@@ -539,7 +539,7 @@ p.home-recents-title{
 
 /* Article Comments */
 .article-comment-container{
-  width: 60%;
+  width: 70%;
   margin: 40px auto;
 }
 
@@ -561,17 +561,41 @@ p.home-recents-title{
 
 .article-comment{
   width: 100%;
-  vertical-align: top;
-  background: #eee;
-  border: 1px solid #ddd;
-  border-radius: 3px;
+  border-bottom: 1px solid #ddd;
 }
 
-.article-comment img{
-  padding: 5px;
+.comment-username{
+  font-size: .7em;
+  font-style: italic;
+}
+
+.comment-picture{
+  display: inline-block;
+  text-align: center;
+  min-width: 60px;
+  max-width: 100px;
+  min-height: 100px; 
+}
+
+.comment-picture img{
+  padding: 10px 10px 0 10px;
   width: 40px;
   height: auto;
+  border-radius: 100%;
 }
+
+.comment-body{
+  display: inline-block;
+  vertical-align: top;
+  max-width: 70%;
+  padding: 10px 10px 10px 30px;
+}
+
+.comment-body p{
+  font-size: .8em;
+}
+
+
 
 
 /****************
@@ -883,6 +907,18 @@ footer{
     resize: none;
   }
 
+  .comment-body{
+    padding: 10px 10px 10px 50px;
+  }
+
+  .comment-picture{
+    display: block;
+    max-width: 100%;
+    min-height: 0;
+    text-align: left;
+    vertical-align: center;
+  }
+
 
 
 
@@ -984,6 +1020,10 @@ footer{
 
 .hide{
   display: none;
+}
+
+.small{
+  font-size: .65em;
 }
 
 @media (min-width: 701px){
