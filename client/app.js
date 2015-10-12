@@ -58,7 +58,7 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
       if (token) {
         if (!jwtHelper.isTokenExpired(token)) {
           auth.authenticate(store.get('profile'), token);
-          appFactory.profile = store.get('profile');
+          appFactory.userProfile = store.get('profile');
         } else {
           store.remove('token');
           store.remove('profile');
@@ -78,7 +78,7 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
   $scope.show.nav = false;
   $scope.show.contact = false;
   $scope.show.userProfile = false;
-  $scope.userProfile = appFactory.profile;
+  $scope.userProfile = appFactory.userProfile;
   $scope.show.overlay = [];
   $scope.selected = [0,0,0,0];
   // window.console.log('oauth is ', OAuth);
@@ -102,7 +102,7 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
     switch($state.current.name){
       case "home":     $scope.selected[0] = 1; break;
       case "blog": 
-      case "article":    $scope.selected[1] = 1; break;
+      case "article":  $scope.selected[1] = 1; break;
       case "projects": $scope.selected[2] = 1; break;
       case "about":    $scope.selected[3] = 1; break;
       default:         setTimeout(init,50);
@@ -170,6 +170,10 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
     store.remove('profile');
     store.remove('token');
     $scope.closeAllMenu();
+  };
+
+  window.checkAuth = function(){
+    console.log($scope.userProfile);
   };
 
 }]);

@@ -5,26 +5,41 @@
         <article class="article-content" ng-include="articleData.url"></article>
     </div>
 
-    <div ng-if="!showComments && articleData !== null" class="center" ng-click="loadComments()">Load Comments</div>
+    <div class="center">
+        <div ng-if="!showComments && articleData !== null" class="button pointer" ng-click="loadComments()">Load Comments</div>
+        <div ng-if="showComments && articleData !== null && hideComments" class="button pointer" ng-click="toggleComments()">Show Comments</div>
+    </div>
 
-    <div ng-if="articleData === null && comments !== null" class="center"><i class="fa fa-gear fa-spin fa-4x black"></i></div>
+    <!-- Loading animation for article comments -->
+    <div ng-if="articleData !== null && showComments && loadingAnimation" class="center"><i class="fa fa-gear fa-spin fa-4x black"></i></div>
 
 
+    <!-- Comment Section -->
+    <div ng-if="articleData !== null && showComments && !loadingAnimation" ng-hide="hideComments" class="article-comment-container">
 
-    <div ng-if="articleData !== null && showComments" class="article-comment-container">
+        <!-- User Info if logged in -->
+        <div ng-if="userProfile !== null" class="center description">
+            You are logged in as {{userProfile.name}} (<span class="highlight pointer" ng-click="signOut()">logout</span>)&nbsp;&nbsp;&nbsp;
+            [<span class="highlight pointer" ng-click="toggleComments()">hide comments</span>]
+        </div>
 
         <!-- Comment Submit Form -->
         <div class="article-comment-input">
             <form>
-                <textarea class="comment-form"></textarea><br>
-                <input type="submit" class="article-comment-submit highlight" ng-click="postComment()" value="Post Comment">
+                <textarea class="comment-form" ng-model="comment.text" ng-focus="checkAuth()"></textarea><br>
+                <input type="submit" class="article-comment-submit button" ng-click="postComment();" ng-disabled="comment.text.length < 3" value="Post Comment">
             </form>
         </div>
 
         <!-- Article comments -->
         <div class="article-comments-container">
-            <div ng-repeat="comment in comments">
-                
+            <div ng-repeat="comment in comments | orderBy: 'time':true" class="article-comment">
+                <div>
+                    <a ng-href={{comment.link}}><img ng-src={{comment.picture}} alt="User Image"></a>
+                    <span class="comment-name" ng-bind="comment.name"></span>
+                    <span class="comment-time" ng-bind="comment.time"></span>
+                </div>
+                <p class="comment-text" ng-bind="comment.text"></p>
             </div>
         </div>
 

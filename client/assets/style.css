@@ -539,11 +539,12 @@ p.home-recents-title{
 
 /* Article Comments */
 .article-comment-container{
-  margin: 40px 0;
+  width: 60%;
+  margin: 40px auto;
 }
 
 .comment-form{
-  min-width: 60%;
+  min-width: 100%;
   height: 70px;
 }
 
@@ -558,6 +559,19 @@ p.home-recents-title{
   color: black;
 }
 
+.article-comment{
+  width: 100%;
+  vertical-align: top;
+  background: #eee;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.article-comment img{
+  padding: 5px;
+  width: 40px;
+  height: auto;
+}
 
 
 /****************
@@ -861,10 +875,17 @@ footer{
     text-align: center;
   }
 
-  .comment-form{
+  .article-comment-container{
     min-width: 90%;
+  }
+
+  .comment-form{
     resize: none;
   }
+
+
+
+
 
 
   /* Project Styling */
@@ -935,6 +956,10 @@ footer{
 
 .center{
   text-align: center;
+}
+
+.margin-auto{
+  margin: auto;
 }
 
 .right{

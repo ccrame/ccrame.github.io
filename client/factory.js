@@ -13,7 +13,7 @@ module.exports = function(){
     }
   };
 
-  obj.profile = null;
+  obj.userProfile = null;
 
   obj._2 = "kwwsv=22surmwhvwlqj1iluhedvhlr1frp";
   obj._1 = function(a){

@@ -59,7 +59,7 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
       if (token) {
         if (!jwtHelper.isTokenExpired(token)) {
           auth.authenticate(store.get('profile'), token);
-          appFactory.profile = store.get('profile');
+          appFactory.userProfile = store.get('profile');
         } else {
           store.remove('token');
           store.remove('profile');
@@ -79,7 +79,7 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
   $scope.show.nav = false;
   $scope.show.contact = false;
   $scope.show.userProfile = false;
-  $scope.userProfile = appFactory.profile;
+  $scope.userProfile = appFactory.userProfile;
   $scope.show.overlay = [];
   $scope.selected = [0,0,0,0];
   // window.console.log('oauth is ', OAuth);
@@ -103,7 +103,7 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
     switch($state.current.name){
       case "home":     $scope.selected[0] = 1; break;
       case "blog": 
-      case "article":    $scope.selected[1] = 1; break;
+      case "article":  $scope.selected[1] = 1; break;
       case "projects": $scope.selected[2] = 1; break;
       case "about":    $scope.selected[3] = 1; break;
       default:         setTimeout(init,50);
@@ -173,24 +173,31 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
     $scope.closeAllMenu();
   };
 
+  window.checkAuth = function(){
+    console.log($scope.userProfile);
+  };
+
 }]);
 },{"./app/about/about.js":2,"./app/blog/blog.js":3,"./app/home/home.js":4,"./app/projects/projects.js":5,"./factory.js":6,"angular":13,"angular-jwt":8,"angular-storage":10,"angular-ui-router":11}],2:[function(require,module,exports){
 module.exports = function($scope,appFactory){
 
 };
 },{}],3:[function(require,module,exports){
-module.exports = function($scope, appFactory, $state, $stateParams){
+module.exports = function($scope, appFactory, $state, auth, $stateParams){
   var articlesRef = appFactory.firebase.child('articles');
   var commentRef = appFactory.firebase.child('comments');
   $scope.articleData = null;
   $scope.articles = [];
-  $scope.comments = null;
+  $scope.comments = [];
+  $scope.comment = {};
   $scope.showComments = false;
+  $scope.hideComments = false;
+  $scope.loadingAnimation = true;
   $scope.articleMessage = "Blog Posts";
 
   if($stateParams.article){
     var article = articlesRef.child($stateParams.article);
-    var comments = commentRef.child($stateParams.article);
+    var comments = appFactory.articleComments = commentRef.child($stateParams.article);
 
     // load article contents
     article.on("value",function(receivedArticleInfo){
@@ -203,16 +210,6 @@ module.exports = function($scope, appFactory, $state, $stateParams){
       });
     });
 
-    // load article comments
-    comments.on("value", function(commentData){
-      $scope.comments = [];
-      commentData = commentData.val() || {};
-      comments.off();
-      var keys = Object.keys(commentData);
-      for(var i = keys.length; i >= 0; --i){
-        $scope.comments.push(commentData[keys[i]]);
-      }
-    });
   }
 
 
@@ -229,12 +226,67 @@ module.exports = function($scope, appFactory, $state, $stateParams){
     }
   });
 
+
+
+  // article comment helpers
   $scope.postComment = function(){
-    window.console.log('hello');
+    //exit if invalid comment
+    if(!$scope.userProfile){$scope.signIn(); return;}
+    if(!$scope.comment.text){return;}
+    if(!$scope.comment.text.length){return;}
+
+    //get link to user profile
+    var link = null;
+    if($scope.userProfile.link){link = $scope.userProfile.link}
+    else if ($scope.userProfile.screen_name){link = "https://twitter.com/" + $scope.userProfile.screen_name;}
+    else { link = "https://plus.google.com/" + $scope.userProfile.user_id.split('|')[1];}
+
+    //post comment to db
+    appFactory.articleComments.push().set({
+      text : $scope.comment.text,
+      time : (new Date()).getTime(),
+      picture : $scope.userProfile.picture,
+      name: $scope.userProfile.name,
+      email: $scope.userProfile.email || $scope.userProfile.screen_name + '@twitter.com',
+      link: link
+
+    });
+
+    //clear previous comment
+    appFactory.update($scope,function(scope){
+      scope.comment = {};
+    });
+  };
+
+
+
+  var wrapper = function(){
+    appFactory.update($scope,function(scope){
+      scope.loadingAnimation = false;
+    });
   };
 
   $scope.loadComments = function(){
     $scope.showComments = true;
+    
+    // load article comments
+    comments.on("child_added", function(commentData){
+      appFactory.update($scope, function(scope){
+        scope.comments.push(commentData.val());
+      });
+    });
+
+    setTimeout(wrapper,1000);
+  };
+
+  $scope.toggleComments = function(){
+    $scope.hideComments = !$scope.hideComments;
+  };
+
+  $scope.checkAuth = function(){
+    if(!auth.isAuthenticated){
+      $scope.signIn();
+    }
   };
 
 
@@ -302,7 +354,7 @@ module.exports = function(){
     }
   };
 
-  obj.profile = null;
+  obj.userProfile = null;
 
   obj._2 = "kwwsv=22surmwhvwlqj1iluhedvhlr1frp";
   obj._1 = function(a){
