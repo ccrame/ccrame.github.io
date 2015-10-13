@@ -1,7 +1,13 @@
-<p><br>Using Angular? Two way data-binding not working? This is a common problem that can cause headaches. A quick search on your favorite search engine will show that many people have the same problem. This artcile will go over two common ways to make your $scope update again.<br></p>
-<p>$apply<br>While both methods are simple, this is the simpler of the two. This provides a quick way to use a callback to force the scope to update along with your changes. Here is a simple example using Firebase listeners.</p>
-<pre><code>
+<p>Using Angular? Two way data-binding not showing? This is a common problem that can cause headaches. A quick search on your favorite search engine will 
+show that many people have the same problem. This article will go over two common ways to get around this issue.</p>
+<br>
+<br>
 
+
+<h2 class="large">$apply</h2>
+<br>
+<p>$apply forces any changes in the scope to be reflected on-screen. This is accomplished by using a callback. Here is a simple example using Firebase listeners.</p>
+<pre><code>
   var ref = new Firebase('https://data.firebaseio.com');
   var data = ref.child("data");
   $scope.array = [];
@@ -51,7 +57,15 @@
 </code></pre>
 
 <p>Now it is much simpler to re-use this code within any controller.</p>
-<p>$watch<br>This is another way to update the scope when it refuses to do so. The $watch method takes two arguments, both callback functions. The first callback requires a return statement and it is the change in this statement that triggers the second callback function.</p>
+<br>
+<br>
+
+
+<h2 class="large">$watch</h2>
+<br>
+<p>This is another way to perform an update in Angular. The scope is actually always up to date, but changes are just not reflected on the screen. With this method, it is 
+easy to perform an action when a change is observed within the scope. The $watch method takes two arguments, both callback functions. The first callback requires a return statement 
+and it is the change in this statement that triggers the second callback function.</p>
 
 <pre><code>
   $scope.messages= [];
@@ -65,4 +79,4 @@
 
 </code></pre>
 
-<p>As you can see, the second callback takes two arguments.  The first argument is the new value returned by the previous callback function.  The second argument is the old value, or the original value of the previous callback function to which the new value is compared. When these two values are difference from each other, the second callback function is triggered. In the example above, neither value from the second callback function is used. However, it is still triggered due to the difference in the two values. </p>
+<p>As you can see, the second callback takes two arguments.  The first argument is the new value returned by the previous callback function.  The second argument is the old value, or the original value of the previous callback function to which the new value is compared. When these two values are different from each other, the second callback function is triggered. In the example above, neither value from the second callback function is used. However, it is still triggered due to the difference in the two values. </p>

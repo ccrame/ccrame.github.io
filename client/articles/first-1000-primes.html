@@ -1,0 +1,42 @@
+<p>Here is a solution to a simple toy problem. There are several ways to solve this, but the heart of the problem is the method used to check if a number is prime.</p>
+
+
+
+<pre><code>
+  var solution = function(){ 
+    var total = 0;
+    var primes = 0;
+    var number = 0;
+
+    // function to check if a number is a prime
+    var isPrime = function(num){
+      if(num === 2 || num === 3){return true;}
+      if(num === 1 || num % 2 === 0){return false;}
+      for(var i = 3; i <= Math.floor(Math.sqrt(num)); i += 2){
+        if(num % i === 0){return false;}
+      }
+      return true;
+    };
+
+    while(primes < 1000){
+      if(isPrime(++number)){
+        total += number;
+        primes++;
+      }
+    }
+
+    return total;
+  };
+
+  solution(); // 3682913
+
+</code></pre>
+
+
+<p>The <code>isPrime</code> function listed above is heavily optimized to skip a lot of repetition. As a lot of people already know, a number should only be checked for divisibility 
+until we get to the number's square root. For example, if we use the number 36, any number past 6 that goes evenly into 36 is a pair of a previous number that we already encountered. 
+Therefore, any number past the 6 will be a repeated check. 36 is divisible by 4, but if we go further, we will see that it is also divisible by 9.
+</p>
+<br>
+<p>This concept is used in the function above. A further optimization is to check only odd numbers as all even numbers are divisible by 2. This easily cuts in half the number of 
+required checks to perform.</p>
