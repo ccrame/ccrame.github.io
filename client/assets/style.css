@@ -347,6 +347,13 @@ header{
   background: #f8f8f8;
 }
 
+.page-title{
+  margin: 20px auto 0 auto;
+  text-align: center;
+  font-size: 2em;
+  font-family: 'Raleway', sans-serif;
+}
+
 
 /****************
   Home
@@ -530,12 +537,6 @@ p.home-recents-title{
   font-size: .8em;
 }
 
-.article-page-title{
-  font-family: 'Raleway', sans-serif;
-  font-size: 2em;
-  text-align: center;
-}
-
 
 /* Article Comments */
 .article-comment-container{
@@ -619,12 +620,6 @@ p.home-recents-title{
   font-size: 1.5em;
 }
 
-.project-page-title{
-  font-family: 'Raleway', sans-serif;
-  font-size: 2em;
-  margin: 20px auto;
-}
-
 .project-container img{
   display: inline-block;
   margin: auto;
@@ -665,11 +660,7 @@ p.home-recents-title{
   text-align: center;
 }
 
-.about-title{
-  margin: 20px auto 0 auto;
-  font-size: 2em;
-  font-family: 'Raleway', sans-serif;
-}
+
 
 .about-content{
   margin: auto;
