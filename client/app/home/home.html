@@ -13,7 +13,7 @@
                     <p ng-bind="item.description"></p>
                     <span class="read-article-button" ng-click="redirect('article',1,{article:item.key})">Read Article</span>
                 </div>
-                <div class="home-recents-image"><img ng-src={{item.image}} alt=""></div>
+                <div class="home-recents-image"><img ng-if="item.image" ng-src={{item.image}} alt=""></div>
             </div>
         </div>
 
