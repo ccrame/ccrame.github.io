@@ -77,9 +77,9 @@ module.exports = function($scope, appFactory, $state, auth, $stateParams){
   $scope.commentTime = function(time){
     time = (new Date()).getTime() - time;
     //weeks
-    var temp = Math.floor(time / 60480000);
+    var temp = Math.floor(time / 604800000);
     if(temp){return temp + 'w';}
-    time = time % 60480000;
+    time = time % 604800000;
     // days
     temp = Math.floor(time / 86400000);
     if(temp){return temp + 'd';}
