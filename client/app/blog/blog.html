@@ -36,7 +36,7 @@
 
         <!-- Article comments -->
         <div class="article-comments-container">
-            <div ng-repeat="comment in comments | orderBy: 'time':true" class="article-comment">
+            <div ng-repeat="(key,comment) in comments | orderBy: 'comment.time':true" class="article-comment">
 
                 <div class="comment-picture desktop-only">
                     <a ng-href={{comment.link}}><img ng-src={{comment.picture}} class="pointer" alt="User Image"></a><br>
@@ -52,6 +52,7 @@
                     <p ng-bind="comment.text"></p>
                 </div>
 
+                <i ng-if="userProfile.email === comment.email" class="comment-delete fa fa-trash black highlight pointer" ng-click="deleteComment(key)"></i>
             </div>
         </div>
 

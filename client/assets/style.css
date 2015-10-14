@@ -574,10 +574,12 @@ p.home-recents-title{
 }
 
 .article-comment{
+  position: relative;
   width: 100%;
   border-bottom: 1px solid #ddd;
 }
 
+/* User Avatar */
 .comment-username{
   font-size: .7em;
   font-style: italic;
@@ -599,14 +601,25 @@ p.home-recents-title{
 }
 
 .comment-body{
+  position: relative;
   display: inline-block;
   vertical-align: top;
   max-width: 70%;
   padding: 40px 10px 10px 30px;
 }
 
+/* comment body contents */
 .comment-body p{
   font-size: .8em;
+}
+
+.comment-delete{
+  position: absolute;
+  padding: 5px;
+  border-radius: 5px;
+  background: rgba(0,0,0,.5);
+  top: 10px;
+  right: 10px;
 }
 
 

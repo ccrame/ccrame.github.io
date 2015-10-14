@@ -59,6 +59,9 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
         if (!jwtHelper.isTokenExpired(token)) {
           auth.authenticate(store.get('profile'), token);
           appFactory.userProfile = store.get('profile');
+          if(appFactory.userProfile.email === undefined){
+            appFactory.userProfile.email = appFactory.userProfile.screen_name + '@twitter.com';
+          }
         } else {
           store.remove('token');
           store.remove('profile');
@@ -176,4 +179,6 @@ var app = angular.module('main',['auth0',require('angular-ui-router'),require('a
     console.log($scope.userProfile);
   };
 
-}]);
+}])
+
+.directive('resize',function(){});

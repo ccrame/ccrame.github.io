@@ -3,7 +3,7 @@ module.exports = function($scope, appFactory, $state, auth, $stateParams){
   var commentRef = appFactory.firebase.child('comments');
   $scope.articleData = null;
   $scope.articles = [];
-  $scope.comments = [];
+  $scope.comments = {};
   $scope.comment = {};
   $scope.showComments = false;
   $scope.hideComments = false;
@@ -73,6 +73,13 @@ module.exports = function($scope, appFactory, $state, auth, $stateParams){
     });
   };
 
+  $scope.deleteComment = function(key){
+    appFactory.articleComments.child(key).remove();
+    appFactory.update($scope,function(scope){
+      delete scope.comments[key];
+    });
+  };
+
   // show elapsed time since comment posted
   $scope.commentTime = function(time){
     time = (new Date()).getTime() - time;
@@ -109,9 +116,9 @@ module.exports = function($scope, appFactory, $state, auth, $stateParams){
     $scope.showComments = true;
     
     // load article comments
-    comments.on("child_added", function(commentData){
+    appFactory.articleComments.on("child_added", function(commentData){
       appFactory.update($scope, function(scope){
-        scope.comments.push(commentData.val());
+        scope.comments[commentData.name()] = commentData.val();
       });
     });
 
