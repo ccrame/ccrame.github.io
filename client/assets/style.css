@@ -183,6 +183,8 @@ header{
 .fa{
   margin: 0 10px;
   color: white;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .fa:hover{
@@ -681,6 +683,7 @@ p.home-recents-title{
   position: relative;
   text-align: left;
   white-space: nowrap;
+  min-height: 500px;
 }
 
 .project-image img{
@@ -689,10 +692,37 @@ p.home-recents-title{
   height: auto;
 }
 
+.project-image-padding{
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: left .5s;
+}
+
+.right-position{
+  left: 800px;
+}
+
+.left-position{
+  left: -800px;
+}
+
+.project-image-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 700px;
+  height: 500px;
+  background: rgba(0,0,0,0);
+}
+
 
 /* Styling for image controls */
 .project-image-left, .project-image-right{
   position: absolute;
+  -webkit-user-select: none;
+  user-select: none;
   display: none;
   width: 50px;
   line-height: 60px;

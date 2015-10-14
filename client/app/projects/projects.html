@@ -1,12 +1,84 @@
 <section class="project-container">
     <div class="page-title">Projects</div>
 
+    <div class="project-image-container" ng-mouseenter="showControls()" ng-mouseleave="hideControls()">
+
+        <!-- Images for project 1 -->
+        <div ng-if="selected === 0" class="project-image">
+            <div class="project-image-padding" ng-class="{'left-position': imageScrollState[selected] > 0 }">
+                <img src="./client/assets/linelevel1.png" alt="Linelevel">
+            </div>
+
+            <div class="project-image-padding" ng-class="{'left-position': imageScrollState[selected] > 1,'right-position': imageScrollState[selected] < 1}">
+                <img src="./client/assets/linelevel2.png" alt="Linelevel">
+            </div>
+
+            <div class="project-image-padding" ng-class="{'left-position': imageScrollState[selected] > 2,'right-position': imageScrollState[selected] < 2}">
+                <img src="./client/assets/linelevel3.png" alt="Linelevel">
+            </div>
+
+            <div class="project-image-padding" ng-class="{'right-position': imageScrollState[selected] < 3}">
+                <img src="./client/assets/linelevel4.png" alt="Linelevel">
+            </div>
+        </div>
+
+
+        <!-- Images for project 2 -->
+        <div ng-if="selected === 1" class="project-image">
+            <div class="project-image-padding" ng-class="{'left-position': imageScrollState[selected] > 0 }">
+                <img src="./client/assets/political1.png" alt="Political Profiler">
+            </div>
+
+            <div class="project-image-padding" ng-class="{'left-position': imageScrollState[selected] > 1,'right-position': imageScrollState[selected] < 1}">
+                <img src="./client/assets/political2.png" alt="Political Profiler">
+            </div>
+
+            <div class="project-image-padding" ng-class="{'left-position': imageScrollState[selected] > 2,'right-position': imageScrollState[selected] < 2}">
+                <img src="./client/assets/political3.png" alt="Political Profiler">
+            </div>
+
+            <div class="project-image-padding" ng-class="{'right-position': imageScrollState[selected] < 3}">
+                <img src="./client/assets/political4.png" alt="Political Profiler">
+            </div>
+        </div>
+
+
+        <!-- Images for project 3 -->
+        <div ng-if="selected === 2" class="project-image">
+            <div class="project-image-padding" ng-class="{'left-position': imageScrollState[selected] > 0 }">
+                <img src="./client/assets/challenge1.png" alt="Challenge Accepted!">
+            </div>
+
+            <div class="project-image-padding" ng-class="{'left-position': imageScrollState[selected] > 1,'right-position': imageScrollState[selected] < 1}">
+                <img src="./client/assets/challenge2.png" alt="Challenge Accepted!">
+            </div>
+
+            <div class="project-image-padding" ng-class="{'right-position': imageScrollState[selected] < 2}">
+                <img src="./client/assets/challenge3.png" alt="Challenge Accepted!">
+            </div>
+        </div>
+
+        <!-- Overlay to prevent highlighting -->
+        <div class="project-image-overlay"></div>
+
+        <!-- Arrow controls -->
+        <div ng-if="imageScrollState[selected]" class="project-image-left highlight pointer" ng-class="{unhide: showImageControls}" ng-click="scrollImage('left')">
+            <i class="fa fa-angle-left fa-2x"></i>
+        </div>
+
+        <div ng-if="imageScrollState[selected] < imageCount[selected] - 1" class="project-image-right highlight pointer" ng-class="{unhide: showImageControls}" ng-click="scrollImage('right')">
+            <i class="fa fa-angle-right fa-2x"></i>
+        </div>
+
+
+    </div>
+
 
     <div class="project-nav">
         <div class="project-title border">
 
             <div class="project-title-arrows">
-                <i class="fa fa-angle-left fa-2x black highlight pointer" ng-if="selected!==0" ng-click="go('left')"></i>
+                <i class="fa fa-angle-left fa-2x white highlight pointer" ng-if="selected!==0" ng-click="switchProject('left')"></i>
             </div><!--
 
          --><div style="display: inline-block;">
@@ -14,34 +86,23 @@
             </div><!--
 
          --><div class="project-title-arrows">
-                <i class="fa fa-angle-right fa-2x black highlight pointer" ng-if="selected!==project.title.length-1" ng-click="go('right')"></i>
+                <i class="fa fa-angle-right fa-2x white highlight pointer" ng-if="selected!==project.title.length-1" ng-click="switchProject('right')"></i>
             </div>
 
         </div>
 
 
-        <div class="project-description border"> 
+        <div class="project-description"> 
             <p class="description" ng-bind="project.description[selected]"></p>
         </div>
 
 
-        <div class="project-description border"> 
-            <span>Tech Stack: </span><span class="description" ng-bind="project.techStack[selected]"></span>
+        <div class="project-tech-stack"> 
+            <span class="desktop-only">Tech Stack: </span>
+            <span class="mobile-only block">Tech Stack: </span>
+            <span class="description" ng-bind="project.techStack[selected]"></span>
         </div>
     </div>
 
 
-    <div class="project-image" ng-if="selected === 0">
-        <img src="./client/assets/linelevel.png" alt="Linelevel">
-    </div>
-
-
-    <div class="project-image" ng-if="selected === 1">
-        <img src="./client/assets/politicalprofiler.png" alt="Political Profiler">
-    </div>
-
-
-    <div class="project-image" ng-if="selected === 2">
-        <img src="./client/assets/challengeaccepted.png" alt="Challenge Accepted!">
-    </div>
 </section>
