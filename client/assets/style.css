@@ -24,6 +24,15 @@ a{
   color: black;
 }
 
+
+
+iframe{
+  height: 393px;
+  width: 700px;
+}
+
+/*  STYLING FOR PRE  */
+
 code{
   font-size: 1.2em;
   background: #eee;
@@ -34,7 +43,7 @@ code{
 }
 
 pre ,pre>code{
-  color: #777;
+  color: #aaa;
   background: black;
   overflow-x:auto; 
   border: none;
@@ -44,14 +53,15 @@ pre>code{
   padding: none;
 }
 
+pre code span.comment{
 
-iframe{
-  height: 393px;
-  width: 700px;
 }
 
+pre code span.line{
 
+}
 
+pre code span.num
 
 
 
@@ -369,7 +379,6 @@ header{
   margin-left: 30px;
 }
 
-
 .home-section-title{
   display: inline-block;
   font-size: 1em;
@@ -620,16 +629,14 @@ p.home-recents-title{
   font-size: 1.5em;
 }
 
-.project-container img{
-  display: inline-block;
-  margin: auto;
-  width: 700px;
-  height: auto;
-}
 
+/* Styling for project titles */
 .project-title{
   width: 700px;
   margin: auto;
+  background: #222;
+  border-top-right-radius: 7px; 
+  border-top-left-radius: 7px; 
 }
 
 .project-title-arrows{
@@ -643,14 +650,71 @@ p.home-recents-title{
   min-width: 240px;
   font-family: 'Raleway', sans-serif;
   font-size: 1.5em;
-  color: red;
+  color: white;
 }
 
-.project-description{
+
+/* Styling for project description */
+.project-description, .project-tech-stack{
+  border: 1px solid black;
   margin: auto;
+  padding: 5px 0;
   width: 700px;
 }
 
+.project-tech-stack{
+  border-top: none;
+  border-bottom-right-radius: 7px;
+  border-bottom-left-radius: 7px;
+}
+
+
+/* Styling for images */
+.project-image-container{
+  position: relative;
+  width: 700px;
+  margin: 30px auto;
+  overflow: hidden;
+}
+
+.project-image{
+  position: relative;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.project-image img{
+  display: inline-block;
+  max-width: 700px;
+  height: auto;
+}
+
+
+/* Styling for image controls */
+.project-image-left, .project-image-right{
+  position: absolute;
+  display: none;
+  width: 50px;
+  line-height: 60px;
+  height: 50px;
+  background: rgba(0,0,0,.5);
+  border-radius: 10px;
+  top: 45%;
+  z-index: 5;
+  color: black;
+}
+
+.project-image-left{
+  left: 20px;
+}
+
+.project-image-right{
+  right: 20px;
+}
+
+.unhide{
+  display: inline-block;
+}
 
 
 /****************
@@ -898,13 +962,21 @@ footer{
     width: 100%;
   }
 
-  .project-container img{
-    width: 95%;
+  .project-image-container{
+    max-width: 95%;
+  }
+
+  .project-image img{
+    width: 100%;
     height: auto;
   }
 
-  .project-description{
-    width: 90%;
+  .project-description, .project-tech-stack, .project-title{
+    max-width: 90%;
+  }
+
+  .project-description p, .project-tech-stack p{
+    padding: 10px;
   }
 
   .project-nav-item{
