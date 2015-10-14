@@ -54,14 +54,13 @@ pre>code{
 }
 
 pre code span.comment{
-
 }
 
 pre code span.line{
-
 }
 
-pre code span.num
+pre code span.num{
+}
 
 
 
@@ -73,7 +72,6 @@ pre code span.num
 
 *****************************************************/
 header{
-  width: 100%;
   position: relative;
   max-width: 1066px;
   margin: auto;
