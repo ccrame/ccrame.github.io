@@ -1028,6 +1028,10 @@ footer{
     height: auto;
   }
 
+  .project-image-padding{
+    transition: none;
+  }
+
   .project-description, .project-tech-stack, .project-title{
     max-width: 90%;
   }
