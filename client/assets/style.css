@@ -673,6 +673,8 @@ p.home-recents-title{
 
 /* Styling for images */
 .project-image-container{
+  -webkit-user-select: none;
+  user-select: none;
   position: relative;
   width: 700px;
   margin: 30px auto;
@@ -729,8 +731,6 @@ p.home-recents-title{
 /* Styling for image controls */
 .project-image-left, .project-image-right{
   position: absolute;
-  -webkit-user-select: none;
-  user-select: none;
   display: none;
   width: 50px;
   line-height: 60px;
