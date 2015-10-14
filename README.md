@@ -9,3 +9,4 @@ This is my personal site built from scratch.
 Angular.js
 Firebase
 Browserify
+Auth0
