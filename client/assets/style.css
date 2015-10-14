@@ -138,6 +138,8 @@ header{
 
 .nav-bar {
   position: relative;
+  max-width: 1066px;
+  margin: auto;
 }
 
 .nav-hover{
