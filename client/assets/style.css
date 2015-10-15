@@ -31,8 +31,8 @@ iframe{
   width: 700px;
 }
 
-/*  STYLING FOR PRE  */
 
+/*  STYLING FOR PRE  */
 code{
   font-size: 1.2em;
   background: #eee;
@@ -42,24 +42,38 @@ code{
   border-radius: 3px;
 }
 
-pre ,pre>code{
-  color: #aaa;
-  background: black;
+pre ,pre code{
+  color: #f8f8f8;
+  background: #333;
   overflow-x:auto; 
   border: none;
 }
 
-pre>code{
+pre{
+  border: 1px solid orange;
+  border-radius: 15px;
+}
+
+pre code{
   padding: none;
+  counter-reset: span;
 }
 
-pre code span.comment{
+pre code span::before{
+  counter-increment: span;
+  content: counter(span);
 }
 
-pre code span.line{
+pre code span{
+  display: inline-block;
+  text-align: right;
+  color: #aaa;
+  width: 2.5em;
+  margin-right: 20px;
 }
 
-pre code span.num{
+.syntax{
+  color: red;
 }
 
 
@@ -378,7 +392,7 @@ header{
 
 .home-recents-nav{
   text-align: left;
-  margin-left: 30px;
+  margin: 10px 0 0 25px;
 }
 
 
@@ -963,7 +977,7 @@ footer{
 
   .home-recents-nav{
     text-align: center;
-    margin: 0;
+    margin: 10px auto 5px auto;
   }
 
   .home-recents{
