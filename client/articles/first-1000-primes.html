@@ -3,32 +3,32 @@
 
 
 <pre><code>
-  var solution = function(){ 
-    var total = 0;
-    var primes = 0;
-    var number = 0;
-
-    // function to check if a number is a prime
-    var isPrime = function(num){
-      if(num === 2 || num === 3){return true;}
-      if(num === 1 || num % 2 === 0){return false;}
-      for(var i = 3; i <= Math.floor(Math.sqrt(num)); i += 2){
-        if(num % i === 0){return false;}
-      }
-      return true;
-    };
-
-    while(primes < 1000){
-      if(isPrime(++number)){
-        total += number;
-        primes++;
-      }
-    }
-
-    return total;
-  };
-
-  solution(); // 3682913
+  <span></span>var solution = function(){ 
+  <span></span>  var total = 0;
+  <span></span>  var primes = 0;
+  <span></span>  var number = 0;
+  <span></span>
+  <span></span>  // function to check if a number is a prime
+  <span></span>  var isPrime = function(num){
+  <span></span>    if(num === 2 || num === 3){return true;}
+  <span></span>    if(num === 1 || num % 2 === 0){return false;}
+  <span></span>    for(var i = 3; i <= Math.floor(Math.sqrt(num)); i += 2){
+  <span></span>      if(num % i === 0){return false;}
+  <span></span>    }
+  <span></span>    return true;
+  <span></span>  };
+  <span></span>
+  <span></span>  while(primes < 1000){
+  <span></span>    if(isPrime(++number)){
+  <span></span>      total += number;
+  <span></span>      primes++;
+  <span></span>    }
+  <span></span>  }
+  <span></span>
+  <span></span>  return total;
+  <span></span>};
+  <span></span>
+  <span></span>solution(); // 3682913
 
 </code></pre>
 

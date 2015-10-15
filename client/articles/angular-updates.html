@@ -7,51 +7,51 @@ show that many people have the same problem. This article will go over two commo
 <br>
 <p>$apply forces any changes in the scope to be reflected on-screen. This is accomplished by using a callback. Here is a simple example using Firebase listeners.</p>
 <pre><code>
-  var ref = new Firebase('https://data.firebaseio.com');
-  var data = ref.child("data");
-  $scope.array = [];
-
-  data.on("child_added",function(info){
-    $scope.$apply(function(){
-      $scope.array.push(info.val());
-    });
-  });
+  <span></span>var ref = new Firebase('https://data.firebaseio.com');
+  <span></span>var data = ref.child("data");
+  <span></span>$scope.array = [];
+  <span></span>
+  <span></span>data.on("child_added",function(info){
+  <span></span>  $scope.$apply(function(){
+  <span></span>    $scope.array.push(info.val());
+  <span></span>  });
+  <span></span>});
 
 </code></pre>
 
 <p>As you can see, it’s very simple to use. Just use apply to enclose the statement that refuses to update on its own. After using this, you will notice that the data does indeed update. You may also notice errors springing up. Don’t worry. The fix is just as simple.</p>
 <pre><code>
-  data.on("child_added", function(info){
-    if(!$scope.$$phase){
-      $scope.$apply(function(){
-        $scope.array.push(info.val());
-      })
-    } else {
-      $scope.array.push(info.val());
-    }
-  });
+  <span></span>data.on("child_added", function(info){
+  <span></span>  if(!$scope.$$phase){
+  <span></span>    $scope.$apply(function(){
+  <span></span>      $scope.array.push(info.val());
+  <span></span>    })
+  <span></span>  } else {
+  <span></span>    $scope.array.push(info.val());
+  <span></span>  }
+  <span></span>});
 
 </code></pre>
 
 <p>The error is caused by Angular attempting to perform an action multiple times. By adding the check to <code>$scope.$$phase</code>, the code makes sure that the action is only performed once per cycle. Now, if you are planning to use this code throughout your controllers, it may be a good idea to put this code into a factory:</p>
 <pre><code>
-  // In the Factory 'appFactory'
-  Obj.apply = function(scope,cb){
-    if(!scope.$$phase){
-      scope.$apply(function(){
-        cb.call(this,scope);
-      })
-    } else {
-      cb.call(this,scope);
-    }
-  };
-
-  // In the Controller
-  data.on("child_added", function(info){
-    appFactory.apply($scope,function(scope){
-      scope.array.push(info.val());
-    });
-  });
+  <span></span>// In the Factory 'appFactory'
+  <span></span>Obj.apply = function(scope,cb){
+  <span></span>  if(!scope.$$phase){
+  <span></span>    scope.$apply(function(){
+  <span></span>      cb.call(this,scope);
+  <span></span>    })
+  <span></span>  } else {
+  <span></span>    cb.call(this,scope);
+  <span></span>  }
+  <span></span>};
+  <span></span>
+  <span></span>// In the Controller
+  <span></span>data.on("child_added", function(info){
+  <span></span>  appFactory.apply($scope,function(scope){
+  <span></span>    scope.array.push(info.val());
+  <span></span>  });
+  <span></span>});
 
 </code></pre>
 
@@ -67,14 +67,14 @@ easy to perform an action when a change is observed within the scope. The $watch
 and it is the change in this statement that triggers the second callback function.</p>
 
 <pre><code>
-  $scope.messages= [];
-  $scope.lastMessage = '';
-
-  $scope.$watch(function(scope){
-    return scope.messages.length;
-  }, function(newVal,oldVal){
-    $scope.lastMessage = $scope.messages[$scope.messages.length - 1];
-  });
+  <span></span>$scope.messages= [];
+  <span></span>$scope.lastMessage = '';
+  <span></span>
+  <span></span>$scope.$watch(function(scope){
+  <span></span>  return scope.messages.length;
+  <span></span>}, function(newVal,oldVal){
+  <span></span>  $scope.lastMessage = $scope.messages[$scope.messages.length - 1];
+  <span></span>});
 
 </code></pre>
 

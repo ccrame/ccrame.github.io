@@ -1,18 +1,18 @@
 <p> The <code>this</code> keyword is very common in JavaScript and understanding how it works is important in order to write better code. If you are new to JavaScript, there are a few basic patterns you can memorize to gain a quick understanding of the keyword <code>this</code>. </p>
 <p> In the example below, <code>this</code> refers to the object to the left of the dot. To be more precise, <code>this</code> refers to “myObj”:</p>
 <pre><code>
-  var myObj = {};
-  myObj.test = function(){
-    return this;
-  };
-
-  myObj.test(); //myObj
+  <span></span>var myObj = {};
+  <span></span>myObj.test = function(){
+  <span></span>  return this;
+  <span></span>};
+  <span></span>
+  <span></span>myObj.test(); //myObj
 
 </code></pre>
 
 <p> However, in certain cases, the above does not work. An example of this can be seen when using setTimeout. Passing “myObj.test” into setTimeout is equivalent to passing the specific set of instructions included within that function. “myObj” is not passed at all into the setTimeout function. When setTimeout is finally invoked, it is called from the window object (if using a browser), and thus, returns the window object.</p>
 <pre><code>
-  setTimeout(myObj.test,1000); //returns the window object
+  <span></span>setTimeout(myObj.test,1000); //returns the window object
   
 </code></pre>
 
