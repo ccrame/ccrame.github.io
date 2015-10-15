@@ -19,7 +19,7 @@ module.exports = function($scope,appFactory,$state){
                                 'A web app where users can manage their daily tasks and share collections of tasks'];
 
   $scope.project.techStack = ['Angular.js, Firebase, Jasmine, WebRTC, Gulp.js',
-                              'GovTrack API, Angular.js, Node.js/Express.js, Gulp.js, Jasmine, Bower',
+                              'GovTrack API, Angular.js, Node.js/Express.js, jQuery, Bootstrap, Gulp.js, Jasmine, Bower',
                               'Angular.js, MongoDB/Mongoose, Node.js/Express.js, Grunt.js'];
 
 
