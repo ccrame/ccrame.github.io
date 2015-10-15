@@ -424,11 +424,11 @@ header{
 
 .home-link-item{
   color: black;
-  height: 50px;
+  height: 100px;
 }
 
 .home-link-item a img{
-  width: 100px;
+  width: 200px;
   height: auto;
 }
 
@@ -472,6 +472,7 @@ p.home-recents-title{
   display: inline-block;
   width: 200px;
   height: 200px;
+  border-radius: 
   overflow: hidden;
 }
 
