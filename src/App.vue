@@ -1,29 +1,50 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Header />
+    <section class="container">
+      <NavBar />
+      <section class="content">
+        <router-view/>
+      </section>
+    </section>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+import NavBar from '@/components/NavBar.vue';
+import Header from '@/components/Header.vue';
+
+export default {
+  name: 'app',
+  components: {
+    Header,
+    NavBar
   }
 }
+</script>
+
+<style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Poppins');
+  @import '@/styles/variables.scss';
+
+  * {
+    margin: 0;
+    font-family: Poppins;
+    box-sizing: border-box;
+  }
+  #app {
+    min-height: 100vh;
+  }
+  .container {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    min-height: calc(100vh - #{$headerHeight});
+    // background: linear-gradient(#0F2027, #203A43, #2C5364);
+    // background: linear-gradient(#f12711, #f5af19);
+    // background: linear-gradient(#659999, #f4791f);
+  }
+  .content {
+    padding: 0 20px;
+  }
 </style>
